@@ -1,0 +1,110 @@
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,body{
+background-size: cover;
+background-repeat: no-repeat;
+height: 100%;
+font-family: 'Numans', sans-serif;
+}
+
+.login-container{
+align-content: center;
+padding-right: 10px;
+}
+
+.card{
+height: auto;
+background-color: rgba(255, 254, 254, 0.5) !important;
+}
+
+
+
+
+.card-header h3{
+color: rgb(12, 12, 12);
+}
+
+
+
+
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember input
+{
+/* width: 20px;
+height: 20px;
+margin-left: 15px;
+margin-right: 5px; */
+width: 95%;
+padding: 5px;
+font-size: 16px;
+letter-spacing: 1px;
+border: none;
+border-bottom: 1px solid rgb(48, 44, 44);
+margin-bottom: 30px;
+background: transparent;
+position: relative;
+outline: none;
+}
+
+.login_btn{
+color: rgb(255, 255, 255);
+background-color: rgb(45, 94, 172);
+width: 100px;
+}
+
+.login_btn:hover{
+color:blue;
+background-color: white;
+}
+
+.links{
+color: rgb(0, 0, 0);
+}
+
+.links a{
+margin-left: 4px;
+}
+
+/* Image */
+
+.login-image{
+    height: 370px;
+    width: 370px;
+    float: left; 
+    margin-top: 6%;
+}
+/* main */
+/* 
+.main{
+    height: 700px;
+    display: flex;
+} */
+
+
+  
+  /* Create three equal columns that sits next to each other */
+  .column {
+    padding: 5px;
+    width: 800px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50% , -50%);
+    box-shadow: 5px 10px 18px #888888;
+  }
+
+  @media only screen and (max-width: 800px) {
+
+    html,body{
+      overflow-x: hidden;
+      background-color: black;
+    }
+  }

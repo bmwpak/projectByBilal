@@ -1,0 +1,9 @@
+.list-group-item{
+  margin-top: 2px;
+}
+
+.list-group-item:hover {
+    background-color:grey;
+    color: black;
+    font-weight: bold;
+  }

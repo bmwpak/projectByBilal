@@ -1,0 +1,43 @@
+mongodb+srv://bilal:<password>@cluster0.higje.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+
+
+
+<section className="sign-in">
+            <div className="container mt-5">
+                <div className="signin-content">
+
+                    <div className="signin-image">
+                        <figure>
+                            <img src={loginImg} alt="login image" />
+                        </figure>
+                    </div>
+
+                <div className="signin-form">
+                    <h2 className="form-title">Sign In</h2>
+                    <form className="register-form" id="register-form">
+                        
+                        <div className="form-group">
+                            <label htmlFor="email">
+                                <i className="zmdi zmdi-email material-icons-name"></i>
+                            </label>
+                            <input type="email" name="email" id="email" autoComplete="off" placeholder="Your Email" />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="password">
+                                <i className="zmdi zmdi-email material-icons-name"></i>
+                            </label>
+                            <input type="password" name="password" id="password" autoComplete="off" placeholder="Your Password" />
+                        </div>
+
+                        <div className="form-group form-button">
+                            <input type="submit" name="signin" id="signin" placeholder="form-submit" value="Log In" />
+                        </div>
+
+                    </form>
+                </div>
+
+                </div>
+            </div>
+        </section>

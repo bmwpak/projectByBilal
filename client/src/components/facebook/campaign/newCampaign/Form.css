@@ -1,0 +1,13 @@
+
+.table{
+    width: 90%;
+    margin-left: 10%;
+}
+.table td{
+    width: 30%;
+    text-align: left;
+}
+.table th{
+    width: 30%;
+    text-align: left;
+}

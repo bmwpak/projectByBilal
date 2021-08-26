@@ -1,0 +1,40 @@
+.no-found{
+    font-size: 200px;
+    font-weight: bold;
+    position: absolute;
+    top: 35%;
+    left:50%;
+    transform: translate(-50% , -50%);
+}
+
+.error{
+    position: absolute;
+    top: 55%;
+    left:50%;
+    transform: translate(-50% , -50%);
+}
+
+.excuse{
+    position: absolute;
+    top: 65%;
+    left:50%;
+    transform: translate(-50% , -50%);
+}
+
+.btn1{
+    color: rgb(255, 255, 255);
+    background-color: rgb(45, 94, 172);
+    width: 200px;
+    position: absolute;
+    top: 75%;
+    left:50%;
+    transform: translate(-50% , -50%);
+    border-radius: 20px;
+    padding: 5px 10px;
+    }
+    
+    .btn1:hover{
+    color:blue;
+    background-color: white;
+    outline: none;
+    }
