@@ -1,17 +1,26 @@
 import { Box, Button, Card , CardContent, StepLabel , Stepper ,Step , Radio , FormControlLabel , RadioGroup, CircularProgress, FormControl, FormLabel } from '@material-ui/core';
 import SelectInput from '@material-ui/core/Select/SelectInput';
-import {Field , Form , Formik , FormikConfig , FormikValues, ErrorMessage} from 'formik';
+import {Field , Form , Formik , FormikConfig , FormikValues, ErrorMessage, FormikProvider} from 'formik';
 import {  fieldToCheckbox, TextField } from 'formik-material-ui';
 import React , { useState } from 'react';
 import { object , mixed , number } from 'yup';
 import * as Yup from 'yup';
-import RadioSelect  from './RadioSelect';
+import CampaignSelect  from './CampaignSelect';
+import AdsetSetting  from './AdsetSetting';
 import './Form.css'
+import { useEffect } from 'react';
+import NewCampaign from './NewCampaign';
+import { initialState } from '../../../../reducer/UserReducer';
+import AdLevel from './AdLevel';
 
 const sleep = (time: number | undefined) => new Promise((acc) => setTimeout(acc,time));
 
 
-export default function CampaignForm(this: any) {
+
+
+export default function CampaignForm() {
+
+
 
     // initial values
 
@@ -19,39 +28,136 @@ export default function CampaignForm(this: any) {
 
         selection: '',
         engagement: '',
-        appInstallsValue: '',
         CampaignName: '',
-        money: 0,
-        description: ''
+
+        //adset attributes
+
+        AdsetName: '',
+        date: '',
+        location: '',
+        startAge: 13,
+        endAge: 65,
+        gender: '',
+        demographics:[]
     };
-    
-    const [value, setValue] = useState('');
+
+    // for page refresh
+    const [ savedData , setSavedData ] = useState(initialValues);
+
+    // for campaign type selection
+    const [optionValue, setOptionValue] = useState('Engagement');
+
+    const [valueChanged, setValueChanged] = useState('');
+
+    const [campaignNam,setCampaignNam] = useState('');    
+
+    // for Adset
+
+    // date
+    const [adsetDate , setAdsetDate] = useState('');
+
+    // location
+    const [adsetLocation , setAdsetLocation] = useState('');
+
+    // start age
+    const [startAge , setStartAge] = useState(13);
+
+    // end age
+    const [endAge , setEndAge] = useState(65);
+
+    //for gender
+    const [gender , setGender] = useState('All');
+
+    // for demographics
+    const [demographics,setDemographics] = useState([]);
+
+    // for adset name
+    const [ adsetName , setAdsetName ] = useState('');
 
     const handleChange = (prop: React.ChangeEvent<HTMLInputElement>) => {
         
-        setValue((prop.target as HTMLInputElement).value);
+        setOptionValue((prop.target as HTMLInputElement).value);
       }; 
 
     // to store value of selected radio group 
-    const [ otherValue, setOtherValue] = useState('');
+    const [ otherValue, setOtherValue] = useState('Post engagement');
 
    
+     // for ad level
 
-    const SelectRadio = (item: React.SetStateAction<string>) => {
+    const [adCreative , setAdCreative] = useState();
+
+    const [ image , setImage ] = useState('');
+
+
+    // const SelectRadio = (item: React.SetStateAction<string>) => {
         
-        setOtherValue(item);
+    //     setOtherValue(item);
 
-    };   
+    // };   
     
     const submittingValues = {
 
-        selection: value,
+        selection: optionValue,
         engagement: otherValue,
-        appInstallsValue: otherValue,
-        CampaignName: '',
-        money: 0,
-        description: ''
+        CampaignName: campaignNam,
+
+       //adset attributes
+
+       AdsetName: adsetName,
+       date: adsetDate,
+       location: adsetLocation,
+       startAge: startAge,
+       endAge: endAge,
+       gender: gender,
+       demographics:demographics,
+
+       // ad level
+
+       image: image
     };
+
+    // props.setCreateNew(submittingValues);
+
+    useEffect(() => {
+        const data = String(window.localStorage.getItem('saved'));
+        const formData = JSON.parse(data);
+        // setSavedData(formData);
+        setSavedData({
+            selection: formData.selection,
+        engagement: formData.engagement,
+        CampaignName: formData.CampaignName,
+
+       //adset attributes
+
+       AdsetName: formData.AdsetName,
+       date: formData.date,
+       location: formData.location,
+       startAge: formData.startAge,
+       endAge: formData.endAge,
+       gender: formData.gender,
+       demographics:formData.demographics,
+        });
+
+        // for campaign page
+        setOptionValue(formData.selection);
+        setOtherValue(formData.engagement);
+        setCampaignNam(formData.CampaignName);
+
+        // for adset page
+        setAdsetDate(formData.date);
+        setAdsetLocation(formData.location);
+        setStartAge(formData.startAge);
+        setEndAge(formData.endAge);
+        setGender(formData.gender);
+        setDemographics(formData.demographics);
+        setAdsetName(formData.AdsetName);
+
+    },[]);
+
+    useEffect(() =>{
+        window.localStorage.setItem("saved",JSON.stringify(submittingValues));
+    });
 
   return(
         <>
@@ -59,31 +165,41 @@ export default function CampaignForm(this: any) {
             <CardContent>
                 <FormikStepper
                
-                 initialValues={initialValues} 
+                 initialValues={savedData} 
+                 
                  onSubmit = { async (values) => {
                     await sleep(3000);
 
                         submittingValues.CampaignName=values.CampaignName;
+                        submittingValues.AdsetName=values.AdsetName;
+
+                        submittingValues.demographics=demographics;
+
+                        
+                        // submittingValues.date=adsetValues.date;
+                        // submittingValues.location=adsetValues.location;
+                        
+                        // setRecords([...adsetValues,adsetRecord]);
+
+                        
 
                         console.log('values' , submittingValues);
                         
                     
                 }}
+                
+
                 enableReinitialize>
                     
                         <FormikStep label="Campaign" 
-                        validationSchema={object({
-
-                            CampaignName: Yup.string().required('isRequired')
-
-                        })}
+                       
                         >
                         <Box paddingBottom={2}>
                         <FormControl component="fieldset">
                         <FormLabel component="legend">Gender</FormLabel>
 
                         
-                        <RadioGroup name="selection" value={value} onChange={handleChange}>
+                        <RadioGroup name="selection" value={optionValue} onChange={handleChange}>
                         <table className="table">
                         
                             <tr>
@@ -96,12 +212,10 @@ export default function CampaignForm(this: any) {
                                 <td>
                                 
                                     <FormControlLabel value="Brand Awareness" control={<Radio />} label="Brand Awareness" />
-                                    <FormControlLabel value="Reach" control={<Radio />} label="Reach" />
                                 </td>
                                 <td>
-                                     <FormControlLabel value="Traffic" control={<Radio />} label="Traffic" />
+                                     <FormControlLabel value="Traffic" control={<Radio />} label="Traffic" /><br/>
                                     <FormControlLabel value="Engagement" control={<Radio />} label="Engagement" />
-                                    <FormControlLabel value="App Installs" control={<Radio />} label="App Installs" />
                                     <FormControlLabel value="Video Views" control={<Radio />} label="Video Views" />
                                     <FormControlLabel value="Lead Generation" control={<Radio />} label="Lead Generation" />
                                     <FormControlLabel value="Messages" control={<Radio />} label="Messages" />
@@ -109,15 +223,11 @@ export default function CampaignForm(this: any) {
                                 </td>
                                 <td>
                                     <FormControlLabel value="Conversions" control={<Radio />} label="Conversions" />
-                                    <FormControlLabel value="Catalog Sales" control={<Radio />} label="Catalog Sales" />
-                                    <FormControlLabel value="Store Traffic" control={<Radio />} label="Store Traffic" />
                                 </td>
                             </tr>
                             <tr>                        
 
-                            <ErrorMessage name="selection">
-                                    { msg => <div style={{ color: 'red' }}>{msg}</div> }
-                            </ErrorMessage>
+                           
 
                             </tr>
                             </table>
@@ -125,41 +235,52 @@ export default function CampaignForm(this: any) {
                             </FormControl>
                         
                         </Box>
-                        <RadioSelect id="1" name={value} SelectRadio={SelectRadio} />
+                        <CampaignSelect id="1" name={optionValue} setOtherValue={setOtherValue} otherValue={otherValue} />
                         <Box paddingBottom={2}>
-                            {(value=="")||(((value=='Engagement')||(value=='App Installs'))&&(otherValue=='')) ?
-                        <Field fullWidth name="CampaignName" disabled
-                        onClick={()=>{
-                            if(value=='')
-                            alert('please first select Campaign Type')
-                            else
-                            alert('please select type')
-                        }}                        
-                         component={TextField} label="Campaign Name" />
-                         :
-                            <Field fullWidth name="CampaignName"                          
-                             component={TextField}  label="Campaign Name" />
-                         }
+                            
+                             <Field fullWidth name="CampaignName"
+                             value={campaignNam} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setCampaignNam((e.target as HTMLInputElement).value)}                    
+                              component={TextField} label="Campaign Name" /><br/>
+
+                              <label style={{marginLeft:'43%',color:'blue'}}>
+                                If input is empty then 'New Campaign' will be written</label>
+                         
                         </Box>
                       
                         
                         </FormikStep>
                         <FormikStep label = "Ad set" 
-                        //  validationSchema={object({
-                        //     money:mixed().when('conversion' , {
-                        //         is: true,
-                        //         then: number().required().min(1_000_000),
-                        //         otherwise: number().required()
-                        //     })
-                        // })}
+                        
                         >
                             <Box paddingBottom={2}>
-                        <Field fullWidth name="money" type="number" component={TextField} label="All the money I have" />
+                        <AdsetSetting id="1" name={optionValue}
+                         adsetDate={adsetDate}
+                         setAdsetDate={setAdsetDate}
+                         adsetLocation={adsetLocation}
+                         setAdsetLocation={setAdsetLocation}
+                         startAge={startAge}                         
+                         setStartAge={setStartAge}
+                         endAge={endAge}
+                         setEndAge={setEndAge}
+                         gender={gender}
+                         setGender={setGender}
+                         setDemographics={setDemographics}
+                         demographics={demographics}
+                         adsetName={adsetName}
+                         setAdsetName={setAdsetName}
+                         />
                         </Box>
                         </FormikStep>
                         <FormikStep label = "Ad Creation" >
                             <Box paddingBottom={2}>
-                        <Field fullWidth name="description" component={TextField} label="Description" />
+
+                        <AdLevel name={optionValue} 
+                        adCreative={adCreative}
+                        setAdCreative={setAdCreative}
+                        image={image}
+                        setImage={setImage}
+
+                        />
                         </Box>
                         </FormikStep>
                     
@@ -215,7 +336,7 @@ export function FormikStepper({children , ...props}: FormikConfig<FormikValues>)
         }}
         >
             {({isSubmitting}) => (
-            <Form autoComplete="off">
+            <Form autoComplete="off" style={{width:"auto"}} >
             <Stepper alternativeLabel activeStep={step}>
         {labels().map((child,index) => (
           <Step completed={step > index || completed}>
@@ -226,7 +347,7 @@ export function FormikStepper({children , ...props}: FormikConfig<FormikValues>)
         ))}
       </Stepper>
                 {currentChild}
-                {step > 0 ? <Button disabled={isSubmitting } variant="contained" style={{marginRight: '10px'}}
+                {step > 0 ? <Button disabled={isSubmitting} variant="contained" style={{marginRight: '10px'}}
                  color="primary" onClick={() => setStep((s) => s-1)}>Back</Button> : null}
                 <Button
                 startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}

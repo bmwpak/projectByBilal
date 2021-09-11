@@ -1,15 +1,15 @@
 import './NewCampaign.css';
 import CampaignForm from './Forms.tsx';
 
-const NewCampaign = () => {
+const NewCampaign = (props) => {
 
 
   return(
     <>
     <div class="new-campaign-container">
-  <ul class="list-group">
-  <li class="new-item"><CampaignForm /></li>
-  </ul>
+  <div class="list-group">
+  <div preventDefault class="new-item" ><CampaignForm setCreateNew={props.setCreateNew} /></div>
+  </div>
 </div>
     </>
   )

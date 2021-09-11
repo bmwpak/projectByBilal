@@ -5,7 +5,7 @@ import OldCampaign from './campaign/oldCampaign/OldCampaign';
 
 
 
-const Selection = () => {
+const Selection = (props) => {
 
     const [ active , setActive ] = useState("new");
 
@@ -14,12 +14,12 @@ const Selection = () => {
   return(
     <>
     <div class="container">
-  <ul class="list-group">
-  <li class="list-group-item" onClick={() => setActive("new")}>New Campaign</li>
-  <li class="list-group-item" onClick={() => setActive("old")}>Already Existing Campaign</li>
-  { active ==="new" && <NewCampaign />}
-  { active === "old" && <OldCampaign />}
-  </ul>
+  <div class="list-group">
+  <div class="list-group-item" onClick={() => setActive("new")}>New Campaign</div>
+  <div class="list-group-item" onClick={() => setActive("old")}>Already Existing Campaign</div>
+  { active ==="new" && <NewCampaign preventDefault setCreateNew={props.setCreateNew} />}
+  { active === "old" && <OldCampaign preventDefault />}
+  </div>
 </div>
     </>
   )

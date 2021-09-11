@@ -4,14 +4,23 @@ import Selection from './Selection';
 
 const Fb = () => {
 
+  const [createNew , setCreateNew] = useState();
+
+  // to change page
   const [ hide , showHide ] = useState("none");
 
-  const pressed = () => { 
+  const pressed = (e) => { 
     
     if(hide == "none")
-    {showHide("selected");}
-    else if(hide == "selected")
-    {showHide("none");}
+    {
+      showHide("selected");
+      e.preventDefault();
+  }
+    else if(hide == "selected")    
+    {
+      showHide("none");
+      e.preventDefault();
+    }
   
   }
 
@@ -19,15 +28,13 @@ const Fb = () => {
     <>
     <div class="container">
   <h2>Basic List Group</h2>
-  <ul class="list-group">
-    <li class="list-group-item" onClick={pressed}>Facebook</li>
+  <div class="list-group">
+    <div class="list-group-item" onClick={pressed}>Facebook</div>
     <div>      
       { hide === "none" }
-      { hide === "selected" && <Selection />}
+      { hide === "selected" && <Selection  setCreateNew={setCreateNew} />}
     </div>
-    <li class="list-group-item">Second item</li>
-    <li class="list-group-item">Third item</li>
-  </ul>
+  </div>
 </div>
     </>
   )
