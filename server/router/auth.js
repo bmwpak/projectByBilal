@@ -247,6 +247,13 @@ router.post('/reset-password' , (req,res) => {
 });
 });
 
+router.post('/saveNewCampFb' , (req , res) => {
+   
+    console.log(req.body);
+    res.json({message:req.body});
+
+});
+
 
 
 module.exports = router;

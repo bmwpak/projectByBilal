@@ -144,44 +144,51 @@ export default function CampaignForm() {
     };
 
      // post data
-    // const postData = async (e: React.ChangeEvent<HTMLInputElement>) => {
-	// 	e.preventDefault();
+    const postData = async () => {
 
-	// 	const { selection,engagement,CampaignName,
+		const { selection,engagement,CampaignName,
 
-    //     //adset attributes
+        //adset attributes
 
-    //     AdsetName,date,location,startAge,endAge,gender,demographics,
+        AdsetName,date,location,startAge,endAge,gender,demographics,
 
-    //     // adLevel
+        // adLevel
 
-    //     adCreative,image,video,primaryText,headline,description,url} = submittingValues;
+        adCreative,image,video,primaryText,headline,description,url} = submittingValues;
 
-    //     console.log(image);
+        console.log(image);
 
-	// 	// const res = await fetch("/register" , {
-	// 	// 	method : "POST" ,
-	// 	// 	headers : {
-	// 	// 		"Content-Type" : "application/json"
-	// 	// 	},
-	// 	// 	body : JSON.stringify({
-	// 	// 		name,email,phone,profession,password,cpassword
-	// 	// 	})
-	// 	// });
+        const res = await fetch("/saveNewCampFb" , {
+            method : "POST" ,
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+                selection,engagement,CampaignName,
 
-	// 	// const data = await res.json();
+        //adset attributes
 
-	// 	// if(res.status === 422 || !data){
-	// 	// 	window.alert("Invalid Registration Data!");
-	// 	// 	console.log("Invalid Registration Data!");
-	// 	// }else{
-	// 	// 	window.alert("Registration Successfull!");
-	// 	// 	console.log("Registration Successfull!");
+        AdsetName,date,location,startAge,endAge,gender,demographics,
 
-	// 	// 	// history.push('/login');
-	// 	// }
+        // adLevel
 
-	// };
+        adCreative,image,video,primaryText,headline,description,url
+            })
+        });
+
+        const data = await res.json();
+
+		if(res.status === 422 || !data){
+			window.alert("Invalid Registration Data!");
+			console.log("Invalid Registration Data!");
+		}else{
+			window.alert("Registration Successfull!");
+			console.log("Registration Successfull!");
+
+			// history.push('/login');
+		}
+
+	};
 
     // props.setCreateNew(submittingValues);
 
@@ -223,7 +230,7 @@ export default function CampaignForm() {
 
         setAdCreative(formData.adCreative);
         setImage(formData.image);
-        setVideo(formData.video);
+        // setVideo(formData.video);
         setPrimaryText(formData.primaryText);
         setHeadline(formData.headline);
         setDescription(formData.description);
@@ -266,7 +273,7 @@ export default function CampaignForm() {
                             submittingValues.url==''){
                                 alert('Fill all input fields');
                             }else{
-                                // {postData(values)}
+                                {postData()}
                             }
                         }else if(submittingValues.selection == 'Traffic'){
                             if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
@@ -277,7 +284,7 @@ export default function CampaignForm() {
                             submittingValues.url==''){
                                 alert('Fill all input fields');
                             }else{
-                                // {postData(values)}
+                                {postData()}
                             }
                         }else if((submittingValues.selection == 'Engagement')&&(submittingValues.engagement == 'Post engagement')){
                             if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
@@ -287,7 +294,7 @@ export default function CampaignForm() {
                             submittingValues.primaryText==''||submittingValues.url==''){
                                 alert('Fill all input fields');
                             }else{
-                                // {postData(values)}
+                                {postData()}
                             }
                         }else if((submittingValues.selection == 'Engagement')&&(submittingValues.engagement == 'Page likes')){
                             if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
@@ -297,7 +304,7 @@ export default function CampaignForm() {
                             submittingValues.primaryText==''){
                                 alert('Fill all input fields');
                             }else{
-                                // {postData(values)}
+                                {postData()}
                             }
                         }else if(submittingValues.selection == 'Video Views'){
                             if((submittingValues.adCreative == 'Video' && submittingValues.video == '')){
@@ -307,7 +314,7 @@ export default function CampaignForm() {
                             submittingValues.url==''){
                                 alert('Fill all input fields');
                             }else{
-                                // {postData(values)}
+                                {postData()}
                             }
                         }else if(submittingValues.selection == 'Lead Generation'){
                             if((submittingValues.adCreative == 'Video' && submittingValues.video == '')){
@@ -316,7 +323,7 @@ export default function CampaignForm() {
                             submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''){
                                 alert('Fill all input fields');
                             }else{
-                                // {postData(values)}
+                                {postData()}
                             }
                         }else if(submittingValues.selection == 'Messages'){
                             if((submittingValues.adCreative == 'Video' && submittingValues.video == '')){
@@ -325,7 +332,7 @@ export default function CampaignForm() {
                             submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''){
                                 alert('Fill all input fields');
                             }else{
-                                // {postData(values)}
+                                {postData()}
                             }
                         }if(submittingValues.selection == 'Conversions'){
                             if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
@@ -336,48 +343,7 @@ export default function CampaignForm() {
                             submittingValues.url==''){
                                 alert('Fill all input fields');
                             }else{
-                                // return(
-                                //     <>
-                                //     <Submit id="1"
-                                //     submittingValues={submittingValues} 
-                                //     />
-                                //     </>
-                                // );
-                                const { selection,engagement,CampaignName,
-
-                                    //adset attributes
-
-                                    AdsetName,date,location,startAge,endAge,gender,demographics,
-
-                                    // adLevel
-
-                                    adCreative,image,video,primaryText,headline,description,url} = submittingValues;
-
-                                    console.log(location);
-
-                                    // const res = await fetch("/register" , {
-                                    //     method : "POST" ,
-                                    //     headers : {
-                                    //         "Content-Type" : "application/json"
-                                    //     },
-                                    //     body : JSON.stringify({
-                                    //         name,email,phone,profession,password,cpassword
-                                    //     })
-                                    // });
-
-                                    // const data = await res.json();
-
-                                    // if(res.status === 422 || !data){
-                                    //     window.alert("Invalid Registration Data!");
-                                    //     console.log("Invalid Registration Data!");
-                                    // }else{
-                                    //     window.alert("Registration Successfull!");
-                                    //     console.log("Registration Successfull!");
-
-                                    // 	// history.push('/login');
-                                    // }
-
-                                    
+                                {postData()}                                   
 
                                 };
                             }
