@@ -27,7 +27,6 @@ const CampaignSelect = (props) => {
             <RadioGroup  aria-label="gender" name="engagement"  value={props.otherValue} onChange={SelectedRadio}>
                 <FormControlLabel value="Post engagement" control={<Radio />} label="Post engagement" />
                 <FormControlLabel value="Page likes" control={<Radio />} label="Page likes" />
-                <FormControlLabel value="Event responses" control={<Radio />} label="Event responses" />
             </RadioGroup>
             </FormControl>
             </Box>

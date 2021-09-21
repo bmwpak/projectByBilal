@@ -12,6 +12,9 @@ import { useEffect } from 'react';
 import NewCampaign from './NewCampaign';
 import { initialState } from '../../../../reducer/UserReducer';
 import AdLevel from './AdLevel';
+// import Submit from './Submit';
+
+
 
 const sleep = (time: number | undefined) => new Promise((acc) => setTimeout(acc,time));
 
@@ -19,8 +22,6 @@ const sleep = (time: number | undefined) => new Promise((acc) => setTimeout(acc,
 
 
 export default function CampaignForm() {
-
-
 
     // initial values
 
@@ -38,7 +39,17 @@ export default function CampaignForm() {
         startAge: 13,
         endAge: 65,
         gender: '',
-        demographics:[]
+        demographics:[],
+
+        // adLevel
+
+        adCreative: '',
+        image: '',
+        video: '',
+        primaryText:'',
+        headline:'',
+        description:'',
+        url:''
     };
 
     // for page refresh
@@ -47,7 +58,8 @@ export default function CampaignForm() {
     // for campaign type selection
     const [optionValue, setOptionValue] = useState('Engagement');
 
-    const [valueChanged, setValueChanged] = useState('');
+    // to store value of selected radio group 
+    const [ otherValue, setOtherValue] = useState('Post engagement');
 
     const [campaignNam,setCampaignNam] = useState('');    
 
@@ -79,16 +91,24 @@ export default function CampaignForm() {
         setOptionValue((prop.target as HTMLInputElement).value);
       }; 
 
-    // to store value of selected radio group 
-    const [ otherValue, setOtherValue] = useState('Post engagement');
+
 
    
      // for ad level
 
-    const [adCreative , setAdCreative] = useState();
+    const [adCreative , setAdCreative] = useState('Video');
 
     const [ image , setImage ] = useState('');
 
+    const [ video , setVideo ] = useState('');
+
+    const [ primaryText , setPrimaryText ] = useState('');
+
+    const [ headline , setHeadline ] = useState('');
+
+    const [ description , setDescription ] = useState('');
+
+    const [ url , setUrl ] = useState('');
 
     // const SelectRadio = (item: React.SetStateAction<string>) => {
         
@@ -114,8 +134,54 @@ export default function CampaignForm() {
 
        // ad level
 
-       image: image
+       adCreative: adCreative,
+       image: image,
+       video: video,
+        primaryText:primaryText,
+        headline:headline,
+        description:description,
+        url:url
     };
+
+     // post data
+    // const postData = async (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	e.preventDefault();
+
+	// 	const { selection,engagement,CampaignName,
+
+    //     //adset attributes
+
+    //     AdsetName,date,location,startAge,endAge,gender,demographics,
+
+    //     // adLevel
+
+    //     adCreative,image,video,primaryText,headline,description,url} = submittingValues;
+
+    //     console.log(image);
+
+	// 	// const res = await fetch("/register" , {
+	// 	// 	method : "POST" ,
+	// 	// 	headers : {
+	// 	// 		"Content-Type" : "application/json"
+	// 	// 	},
+	// 	// 	body : JSON.stringify({
+	// 	// 		name,email,phone,profession,password,cpassword
+	// 	// 	})
+	// 	// });
+
+	// 	// const data = await res.json();
+
+	// 	// if(res.status === 422 || !data){
+	// 	// 	window.alert("Invalid Registration Data!");
+	// 	// 	console.log("Invalid Registration Data!");
+	// 	// }else{
+	// 	// 	window.alert("Registration Successfull!");
+	// 	// 	console.log("Registration Successfull!");
+
+	// 	// 	// history.push('/login');
+	// 	// }
+
+	// };
 
     // props.setCreateNew(submittingValues);
 
@@ -123,21 +189,21 @@ export default function CampaignForm() {
         const data = String(window.localStorage.getItem('saved'));
         const formData = JSON.parse(data);
         // setSavedData(formData);
-        setSavedData({
-            selection: formData.selection,
-        engagement: formData.engagement,
-        CampaignName: formData.CampaignName,
+    //     setSavedData({
+    //         selection: formData.selection,
+    //     engagement: formData.engagement,
+    //     CampaignName: formData.CampaignName,
 
-       //adset attributes
+    //    //adset attributes
 
-       AdsetName: formData.AdsetName,
-       date: formData.date,
-       location: formData.location,
-       startAge: formData.startAge,
-       endAge: formData.endAge,
-       gender: formData.gender,
-       demographics:formData.demographics,
-        });
+    //    AdsetName: formData.AdsetName,
+    //    date: formData.date,
+    //    location: formData.location,
+    //    startAge: formData.startAge,
+    //    endAge: formData.endAge,
+    //    gender: formData.gender,
+    //    demographics:formData.demographics,
+    //     });
 
         // for campaign page
         setOptionValue(formData.selection);
@@ -152,6 +218,16 @@ export default function CampaignForm() {
         setGender(formData.gender);
         setDemographics(formData.demographics);
         setAdsetName(formData.AdsetName);
+
+        //for ad-level
+
+        setAdCreative(formData.adCreative);
+        setImage(formData.image);
+        setVideo(formData.video);
+        setPrimaryText(formData.primaryText);
+        setHeadline(formData.headline);
+        setDescription(formData.description);
+        setUrl(formData.url);
 
     },[]);
 
@@ -170,10 +246,7 @@ export default function CampaignForm() {
                  onSubmit = { async (values) => {
                     await sleep(3000);
 
-                        submittingValues.CampaignName=values.CampaignName;
-                        submittingValues.AdsetName=values.AdsetName;
-
-                        submittingValues.demographics=demographics;
+                        
 
                         
                         // submittingValues.date=adsetValues.date;
@@ -183,10 +256,135 @@ export default function CampaignForm() {
 
                         
 
-                        console.log('values' , submittingValues);
+                        // console.log('values' , submittingValues);
+                        if(submittingValues.selection == 'Brand Awareness'){
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
+                            (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
+                                alert('please select '+submittingValues.adCreative);
+                            }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
+                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||
+                            submittingValues.url==''){
+                                alert('Fill all input fields');
+                            }else{
+                                // {postData(values)}
+                            }
+                        }else if(submittingValues.selection == 'Traffic'){
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
+                            (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
+                                alert('please select '+submittingValues.adCreative);
+                            }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
+                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||
+                            submittingValues.url==''){
+                                alert('Fill all input fields');
+                            }else{
+                                // {postData(values)}
+                            }
+                        }else if((submittingValues.selection == 'Engagement')&&(submittingValues.engagement == 'Post engagement')){
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
+                            (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
+                                alert('please select '+submittingValues.adCreative);
+                            }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
+                            submittingValues.primaryText==''||submittingValues.url==''){
+                                alert('Fill all input fields');
+                            }else{
+                                // {postData(values)}
+                            }
+                        }else if((submittingValues.selection == 'Engagement')&&(submittingValues.engagement == 'Page likes')){
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
+                            (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
+                                alert('please select '+submittingValues.adCreative);
+                            }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
+                            submittingValues.primaryText==''){
+                                alert('Fill all input fields');
+                            }else{
+                                // {postData(values)}
+                            }
+                        }else if(submittingValues.selection == 'Video Views'){
+                            if((submittingValues.adCreative == 'Video' && submittingValues.video == '')){
+                                alert('please select '+submittingValues.adCreative);
+                            }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
+                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||
+                            submittingValues.url==''){
+                                alert('Fill all input fields');
+                            }else{
+                                // {postData(values)}
+                            }
+                        }else if(submittingValues.selection == 'Lead Generation'){
+                            if((submittingValues.adCreative == 'Video' && submittingValues.video == '')){
+                                alert('please select '+submittingValues.adCreative);
+                            }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
+                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''){
+                                alert('Fill all input fields');
+                            }else{
+                                // {postData(values)}
+                            }
+                        }else if(submittingValues.selection == 'Messages'){
+                            if((submittingValues.adCreative == 'Video' && submittingValues.video == '')){
+                                alert('please select '+submittingValues.adCreative);
+                            }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
+                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''){
+                                alert('Fill all input fields');
+                            }else{
+                                // {postData(values)}
+                            }
+                        }if(submittingValues.selection == 'Conversions'){
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
+                            (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
+                                alert('please select '+submittingValues.adCreative);
+                            }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
+                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||
+                            submittingValues.url==''){
+                                alert('Fill all input fields');
+                            }else{
+                                // return(
+                                //     <>
+                                //     <Submit id="1"
+                                //     submittingValues={submittingValues} 
+                                //     />
+                                //     </>
+                                // );
+                                const { selection,engagement,CampaignName,
+
+                                    //adset attributes
+
+                                    AdsetName,date,location,startAge,endAge,gender,demographics,
+
+                                    // adLevel
+
+                                    adCreative,image,video,primaryText,headline,description,url} = submittingValues;
+
+                                    console.log(location);
+
+                                    // const res = await fetch("/register" , {
+                                    //     method : "POST" ,
+                                    //     headers : {
+                                    //         "Content-Type" : "application/json"
+                                    //     },
+                                    //     body : JSON.stringify({
+                                    //         name,email,phone,profession,password,cpassword
+                                    //     })
+                                    // });
+
+                                    // const data = await res.json();
+
+                                    // if(res.status === 422 || !data){
+                                    //     window.alert("Invalid Registration Data!");
+                                    //     console.log("Invalid Registration Data!");
+                                    // }else{
+                                    //     window.alert("Registration Successfull!");
+                                    //     console.log("Registration Successfull!");
+
+                                    // 	// history.push('/login');
+                                    // }
+
+                                    
+
+                                };
+                            }
+                        }
                         
                     
-                }}
+                }
                 
 
                 enableReinitialize>
@@ -275,10 +473,21 @@ export default function CampaignForm() {
                             <Box paddingBottom={2}>
 
                         <AdLevel name={optionValue} 
+                        otherValue={otherValue}
                         adCreative={adCreative}
                         setAdCreative={setAdCreative}
                         image={image}
                         setImage={setImage}
+                        video={video}
+                        setVideo={setVideo}
+                        primaryText={primaryText}
+                        setPrimaryText={setPrimaryText}
+                        headline={headline}
+                        setHeadline={setHeadline}
+                        description={description}
+                        setDescription={setDescription}
+                        url={url}
+                        setUrl={setUrl}
 
                         />
                         </Box>
