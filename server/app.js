@@ -10,6 +10,12 @@ app.use(cookieParser());
 
 env.config({ path : './config.env' });
 
+// const bodyparser = require('body-parser');
+
+// /*assuming an express app is declared here*/
+// app.use(bodyparser.json());
+// app.use(bodyparser.urlencoded({extended: true}));
+
 // // connection
 // require('../db/conn');
 

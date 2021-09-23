@@ -14,6 +14,8 @@ require('../db/conn');
 // user Schema
 const Register = require("../model/userSchema");
 
+const newFbSave = require("../model/newCampFbSchema");
+
 router.get('/' , (req , res) => {
     res.send("Home Page");
 });
@@ -247,10 +249,38 @@ router.post('/reset-password' , (req,res) => {
 });
 });
 
-router.post('/saveNewCampFb' , (req , res) => {
+router.post('/saveNewCampFb' , async(req , res) => {
    
-    console.log(req.body);
-    res.json({message:req.body});
+
+    const {selection,engagement,CampaignName,
+
+        //adset attributes
+
+        AdsetName,date,location,startAge,endAge,gender,demographics,
+
+        // adLevel
+
+        adCreative,image,video,primaryText,headline,description,url} = req.body;
+
+        console.log(AdsetName);
+
+        const save = new newFbSave({selection,engagement,CampaignName,
+
+            //adset attributes
+    
+            AdsetName,date,location,startAge,endAge,gender,demographics,
+    
+            // adLevel
+    
+            adCreative,image,video,primaryText,headline,description,url});
+
+        const saved = await save.save();
+
+        if(saved){
+            return res.status(201).json({message: "user registered successfully!!"});
+        }else{
+            return res.status(500).json({error: "----------user registered FAILED---------------"});
+        }
 
 });
 

@@ -46,10 +46,10 @@ const newCampFbSchema = new mongoose.Schema({
         type : String,
     },
     image:{
-        type: Image,
+        type: String,
     },
     video:{
-        type: File,
+        type: [],
     },
     primaryText : {
         type : String,
