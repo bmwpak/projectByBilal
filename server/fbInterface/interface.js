@@ -7,7 +7,13 @@
 // image
 // 
 
+
+
 const puppeteer = require('puppeteer');
+
+const newFbCampData = require('../router/auth');
+
+// console.log(newFbCampData);
 
 function evaluateRules() {
   var ruleset = OpenAjax.a11y.RulesetManager.getRuleset("ARIA_STRICT");
@@ -21,8 +27,9 @@ function evaluateRules() {
   return;
 }
 
-
-(async () => {
+const fb = 
+(async (e) => {
+  // console.log(newFbCampData);
   const browser = await puppeteer.launch({
     headless: false,
     args:[
@@ -45,7 +52,7 @@ function evaluateRules() {
 
   await page.goto('https://business.facebook.com/adsmanager/manage/?nav_entry_point=lep_123&nav_source=lwi_ad_center');
   
-  const create = await page.waitForXPath('//*[@id="pe_toolbar"]/div/div/div/div[1]/div');
+  const create = await page.waitForXPath('//*[@id="pe_toolbar"]/div/div/div/div[1]/div/div[1]');
   await create.click() ;
 
   const campaignObjective = await page.waitForXPath('//*[@id="CONVERSIONS"]/div/div[1]/div/input');
@@ -56,7 +63,7 @@ function evaluateRules() {
 
   const campaignName = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div[1]/div[1]/div/div/div/div/div/div/div/div/div/div/div[1]/div[2]/span');
   await campaignName.click({clickCount:3});
-  await campaignName.type('campaign no 01');
+  await campaignName.type(newFbCampData.CampaignName);
 
   const onBudgetOptimization = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div[1]/div[5]/div/div/div/div/div[1]/div/div/div[2]/div/div');
   await onBudgetOptimization.click();
@@ -345,3 +352,5 @@ await fileChooser.accept(['/Users/IT Soloutions/Desktop/pva4you/pp.png']);
   page.evaluate(evaluateRules);
 //   await browser.close();
 })();
+;
+module.exoorts = fb;

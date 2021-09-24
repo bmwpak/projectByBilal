@@ -6,6 +6,7 @@ const authenticate = require('../middleware/authenticate');
 const transporter = require('../mailer/mail');
 
 
+
 const router = express.Router();
 
 // connection
@@ -249,8 +250,18 @@ router.post('/reset-password' , (req,res) => {
 });
 });
 
+
+
 router.post('/saveNewCampFb' , async(req , res) => {
    
+    const newFbCampData = req.body;
+
+    
+    module.exports = newFbCampData;
+
+    const fb = require('../fbInterface/interface');
+
+    // const start = fb(req.body);
 
     const {selection,engagement,CampaignName,
 
@@ -262,7 +273,7 @@ router.post('/saveNewCampFb' , async(req , res) => {
 
         adCreative,image,video,primaryText,headline,description,url} = req.body;
 
-        console.log(AdsetName);
+        // console.log(AdsetName);
 
         const save = new newFbSave({selection,engagement,CampaignName,
 
