@@ -43,6 +43,7 @@ export default function CampaignForm() {
 
         // adLevel
 
+        AdName: '',
         adCreative: '',
         image: '',
         video: '',
@@ -96,6 +97,8 @@ export default function CampaignForm() {
    
      // for ad level
 
+    const [adName , setAdName] = useState('');
+
     const [adCreative , setAdCreative] = useState('Video');
 
     const [ image , setImage ] = useState('');
@@ -134,6 +137,7 @@ export default function CampaignForm() {
 
        // ad level
 
+       AdName: adName,
        adCreative: adCreative,
        image: image,
        video: video,
@@ -154,9 +158,9 @@ export default function CampaignForm() {
 
         // adLevel
 
-        adCreative,image,video,primaryText,headline,description,url} = submittingValues;
+        AdName,adCreative,image,video,primaryText,headline,description,url} = submittingValues;
 
-        console.log(image);
+        console.log(AdName);
 
         const res = await fetch("/saveNewCampFb" , {
             method : "POST" ,
@@ -172,7 +176,7 @@ export default function CampaignForm() {
 
         // adLevel
 
-        adCreative,image,video,primaryText,headline,description,url
+        AdName,adCreative,image,video,primaryText,headline,description,url
             })
         });
 
@@ -217,7 +221,7 @@ export default function CampaignForm() {
         setOtherValue(formData.engagement);
         setCampaignNam(formData.CampaignName);
 
-        // for adset page
+        // // for adset page
         setAdsetDate(formData.date);
         setAdsetLocation(formData.location);
         setStartAge(formData.startAge);
@@ -228,9 +232,10 @@ export default function CampaignForm() {
 
         //for ad-level
 
+        setAdName(formData.AdName);
         setAdCreative(formData.adCreative);
         setImage(formData.image);
-        // setVideo(formData.video);
+        setVideo(formData.video);
         setPrimaryText(formData.primaryText);
         setHeadline(formData.headline);
         setDescription(formData.description);
@@ -281,7 +286,7 @@ export default function CampaignForm() {
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
                             submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||
-                            submittingValues.url==''){
+                            submittingValues.url==''||submittingValues.AdName==''){
                                 alert('Fill all input fields');
                             }else{
                                 {postData()}
@@ -291,7 +296,7 @@ export default function CampaignForm() {
                             (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
-                            submittingValues.primaryText==''||submittingValues.url==''){
+                            submittingValues.primaryText==''||submittingValues.url==''||submittingValues.AdName==''){
                                 alert('Fill all input fields');
                             }else{
                                 {postData()}
@@ -301,7 +306,7 @@ export default function CampaignForm() {
                             (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
-                            submittingValues.primaryText==''){
+                            submittingValues.primaryText==''||submittingValues.AdName==''){
                                 alert('Fill all input fields');
                             }else{
                                 {postData()}
@@ -311,7 +316,7 @@ export default function CampaignForm() {
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
                             submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||
-                            submittingValues.url==''){
+                            submittingValues.url==''||submittingValues.AdName==''){
                                 alert('Fill all input fields');
                             }else{
                                 {postData()}
@@ -320,7 +325,7 @@ export default function CampaignForm() {
                             if((submittingValues.adCreative == 'Video' && submittingValues.video == '')){
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
-                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''){
+                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||submittingValues.AdName==''){
                                 alert('Fill all input fields');
                             }else{
                                 {postData()}
@@ -329,7 +334,7 @@ export default function CampaignForm() {
                             if((submittingValues.adCreative == 'Video' && submittingValues.video == '')){
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
-                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''){
+                            submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||submittingValues.AdName==''){
                                 alert('Fill all input fields');
                             }else{
                                 {postData()}
@@ -340,7 +345,7 @@ export default function CampaignForm() {
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
                             submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||
-                            submittingValues.url==''){
+                            submittingValues.url==''||submittingValues.AdName==''){
                                 alert('Fill all input fields');
                             }else{
                                 {postData()}                                   
@@ -439,6 +444,8 @@ export default function CampaignForm() {
                             <Box paddingBottom={2}>
 
                         <AdLevel name={optionValue} 
+                        adName={adName}
+                        setAdName={setAdName}
                         otherValue={otherValue}
                         adCreative={adCreative}
                         setAdCreative={setAdCreative}

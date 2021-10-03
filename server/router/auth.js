@@ -256,6 +256,8 @@ router.post('/saveNewCampFb' , async(req , res) => {
    
     const newFbCampData = req.body;
 
+    console.log(req.body);
+
     
     module.exports = newFbCampData;
 
@@ -271,7 +273,7 @@ router.post('/saveNewCampFb' , async(req , res) => {
 
         // adLevel
 
-        adCreative,image,video,primaryText,headline,description,url} = req.body;
+        AdName,adCreative,image,video,primaryText,headline,description,url} = req.body;
 
         // console.log(AdsetName);
 

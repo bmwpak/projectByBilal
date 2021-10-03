@@ -233,7 +233,17 @@ const AdLevel = (props) => {
                         Write correct URL</label>
                         
                         </Box>
-                        }
+                        }<hr/>
+
+                        <Box>     
+                        <br/> <span style={{marginLeft:'-88%'}}>Ad Name</span><br/> 
+                        <Field fullWidth name="AdName"
+                        value={props.adName} onChange={(e)=>props.setAdName(e.target.value)}
+                        component={TextField}  label="Ad Name" /><br/>
+
+                       
+                        
+                        </Box>
                     </div>
                 </legend>
             </>
