@@ -256,7 +256,7 @@ router.post('/saveNewCampFb' , async(req , res) => {
    
     const newFbCampData = req.body;
 
-    console.log(req.body);
+    console.log(req.body.image.path);
 
     
     module.exports = newFbCampData;

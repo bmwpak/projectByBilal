@@ -309,11 +309,15 @@ const autoReplacement = await page.waitForXPath('//*[@id="campaignPlacementSecti
   // try{
  // add media
 
- const clickAddMedia = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[3]/div/div[2]/div/div/div[2]/div/div/div/div[2]/div/div/div[3]/div/span[1]/div');
+ 
+ const clickAddMedia = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/div/div/div[3]/div[1]/span[1]/div/button/div/div');
  await clickAddMedia.click();
 
- await page.click('li[role="menuitem"]','Add Image');
-
+ if(newFbCampData.adCreative == 'Image'){
+  await page.click('li[role="menuitem"]','Add Image');
+ }else if(newFbCampData.adCreative == 'Video'){
+  await page.click('li[role="menuitem"]','Add Video');
+ }
  // upload file if any file not uploaded
 
  
@@ -321,8 +325,11 @@ const [fileChooser] = await Promise.all([
   page.waitForFileChooser(),
   page.click('body > div._10._8uff.uiLayer._4-hy._3qw > div._59s7._9l2g > div > div > div > div > div.hmqwj350.c6q80kpu.ig151e16.sme1n7fz.qm5707zr.m9fzaka6.lftrkhxp.tds9wb2m.rwb8dzxj.diwav8v6.f3aw7s6y > div > div > div.pyd2nkot.adkrixjq.my9zkn4v.tds9wb2m > div.rwb8dzxj.diwav8v6.lftrkhxp > div.yukb02kx > div > div > div.puibpoiz.rwb8dzxj.yukb02kx.lftrkhxp.rgsc13q7.s7wjoji2.tds9wb2m > div.lmtvg2su.f030igb8.k1bdusab.tds9wb2m > div.aqz1cesy.e1ri8yhr.hp07fi59.pesago7c.b6ewvobd > div > div > div > div > div:nth-child(1) > div > div.if5qj5rh.tb4cuiq2.kojzg8i3 > div')  
 ]);
-await fileChooser.accept(['/Users/IT Soloutions/Desktop/pva4you/pp.png']);
-
+if(newFbCampData.adCreative == 'Image'){
+  await fileChooser.accept([newFbCampData.image.toString()]);
+}else if(newFbCampData.adCreative == 'Video'){
+  await fileChooser.accept([newFbCampData.video]);
+}
 
 
   const selectImage = await page.waitForXPath('//*[@id="facebook"]/body/div[8]/div[2]/div/div/div/div/div[1]/div/div/div[1]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div/div/div/div/div[4]/div[1]/div/div/div[1]/span/div/div');
