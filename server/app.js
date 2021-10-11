@@ -6,6 +6,12 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
+// ejs
+app.set('view engine' , 'ejs');
+
+// public folder
+app.use(express.static('./Public'));
+
 app.use(cookieParser());
 
 env.config({ path : './config.env' });

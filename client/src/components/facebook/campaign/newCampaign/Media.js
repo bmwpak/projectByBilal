@@ -2,36 +2,78 @@
 import Dropzone from 'react-dropzone';
 
 const Media = (props) => {
-  const upload = (e) => {
+  const upload = async (e) => {
+
+                props.setImage(e.target.files[0]);
+
+                // const files = e.target.files[0]; 
+
+                // const form = new FormData();
+
+                // form.append("first",e.target.files[0]);
+
+                // const res = await fetch("/saveNewCampFb" , {
+                //     method : "POST" ,
+                //     headers : {
                        
-                var reader = new FileReader();
+                //         "type": "formData"
+                //     },
+                //      body : form
+                // //         selection,engagement,CampaignName,
+        
+                // // //adset attributes
+        
+                // // AdsetName,date,location,startAge,endAge,gender,demographics,
+        
+                // // // adLevel
+        
+                // // AdName,adCreative,image,video,primaryText,headline,description,url,
+        
+                
+                   
+                // });
+        
+                // const data = await res.json();
+        
+                // if(res.status === 422 || !data){
+                //     window.alert("Invalid Registration Data!");
+                //     console.log("Invalid Registration Data!");
+                // }else{
+                //     window.alert("Registration Successfull!");
+                //     console.log("Registration Successfull!");
+        
+                //     // history.push('/login');
+                // }
+        
+                       
+                // var reader = new FileReader();
 
-                //Read the contents of Image File.
-                reader.readAsDataURL(e.target.files[0]);
-                reader.onload = function (e) {
+                // //Read the contents of Image File.
+                // reader.readAsDataURL(e.target.files[0]);
+                // reader.onload = function (e) {
 
-                //Initiate the JavaScript Image object.
-                var image = new Image();
+                // //Initiate the JavaScript Image object.
+                // var image = new Image();
 
-                //Set the Base64 string return from FileReader as source.
-                image.src = e.target.result;
+                // //Set the Base64 string return from FileReader as source.
+                // image.src = e.target.result;
 
-                //Validate the File Height and Width.
-                image.onload = function () {
-                    var height = this.height;
-                    var width = this.width;
-                    if (height < 700 || width < 700) {
+                // //Validate the File Height and Width.
+                // image.onload = function () {
+                //     var height = this.height;
+                //     var width = this.width;
+                //     if (height < 700 || width < 700) {
                     
-                    props.setImage('');
-                    alert("Height and Width must exceed 700px");
+                //     props.setImage('');
+                //     alert("Height and Width must exceed 700px");
                     
-                    }else{
-                        if(reader.readyState === 2){
-                                    props.setImage(reader.result);
-                                }
-                    }
-                };
-                };    
+                //     }else{
+                //         if(reader.readyState === 2){
+                //                     props.setImage(reader.result);
+                //                 }
+                //     }
+                // };
+                // };    
         }
 
     
@@ -106,7 +148,7 @@ const Media = (props) => {
 
                {(props.name == 'Video Views')? null:
                        <div> 
-                    <input type="file" onChange={upload} style={{marginLeft:'30%',marginTop:'10%'}}/><br/>
+                    <input type="file" name='image' onChange={upload} style={{marginLeft:'30%',marginTop:'10%'}}/><br/>
 
                     <img src={props.image} style={{width:'400px',height:'auto',marginLeft:'auto',marginBottom:'10%',marginTop:'1%'}} />
                     </div>}
@@ -132,7 +174,7 @@ const Media = (props) => {
                     <Dropzone
                      
                     onDrop={uploadVideo}
-                    accept="video/*"  >
+                      >
                     {({getRootProps, getInputProps}) => (
                         <section>
                         <div {...getRootProps()}>

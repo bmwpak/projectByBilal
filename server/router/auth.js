@@ -4,10 +4,29 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const authenticate = require('../middleware/authenticate');
 const transporter = require('../mailer/mail');
+const path = require('path');
+const multer = require('multer');
+const ejs = require('ejs');
+const formidable = require('formidable');
 
 
+const upload = multer({ dest : 'Public/'});
 
 const router = express.Router();
+
+// disk engine
+
+// const storage = multer.diskStorage({
+//     destination : './Public/uploads/',
+//     filename : function(req , file , callback){
+//         cb(null,Date.now() + path.extname(file.originalname));
+//     }
+// });
+
+// //upload disk
+// const upload = multer({
+//     storage : storage
+// }).single('myImage');
 
 // connection
 require('../db/conn');
@@ -250,50 +269,109 @@ router.post('/reset-password' , (req,res) => {
 });
 });
 
-
-
-router.post('/saveNewCampFb' , async(req , res) => {
+router.post('/saveFiles' , (req , res) => {
    
-    const newFbCampData = req.body;
+    
+    console.log(req.file);
+    console.log(req.body.demographics);
 
-    console.log(req.body.image.path);
+});
+
+
+
+
+router.post('/saveNewCampFb' , upload.single('image') , (req , res) => {
+   
+    
+    console.log(req.file);
+    console.log(req.body);
 
     
-    module.exports = newFbCampData;
 
-    const fb = require('../fbInterface/interface');
+    
+    // var Location = path.parse(req.body.image.replace(/^data:image\/(png|gif|jpeg);base64,/,''));
+
+    // binaryData = new Buffer(Location.dir, 'base64').toString('binary');
+
+    
+
+    // var Images = new Image();
+
+    // Images.src = req.body.image;
+
+    // var img = Images.toDataURL("image");
+
+    // var item_image = img.replace(/^data:image\/(png|jpg);base64,/, "") ;
+
+    // // upload(req.body.image.file,res,(err) => {
+    // //     if(err){
+            
+    // //     }else{
+    // //         console.log(req.file);
+    // //     }
+    // // });
+    // console.log(Location.dir);
+
+    // module.exports=Location.dir;
+
+    // const imageDecoder = require('../fbInterface/imageDecoder');
+
+    // var form = new formidable.IncomingForm();
+
+    // console.log("1");
+
+    // form.parse(req);
+
+    // console.log("2");
+
+    // console.log(__dirname);
+
+    // form.on('fileBegin', function(name,file) {
+    //     file.path=__dirname+'/Public/'+file.name;
+    //     console.log(file.name);
+    // });
+
+    // form.on('file', function(name,file) {
+    //     console.log("uploaded file : " + file.name);
+    // });
+
+    // form.sendFile(__dirname);
+    
+    // // module.exports = newFbCampData;
+
+    // const fb = require('../fbInterface/interface');
 
     // const start = fb(req.body);
 
-    const {selection,engagement,CampaignName,
+    // const {selection,engagement,CampaignName,
 
-        //adset attributes
+    //     //adset attributes
 
-        AdsetName,date,location,startAge,endAge,gender,demographics,
+    //     AdsetName,date,location,startAge,endAge,gender,demographics,
 
-        // adLevel
+    //     // adLevel
 
-        AdName,adCreative,image,video,primaryText,headline,description,url} = req.body;
+    //     AdName,adCreative,image,video,primaryText,headline,description,url} = req.body;
 
-        // console.log(AdsetName);
+    //     // console.log(AdsetName);
 
-        const save = new newFbSave({selection,engagement,CampaignName,
+    //     const save = new newFbSave({selection,engagement,CampaignName,
 
-            //adset attributes
+    //         //adset attributes
     
-            AdsetName,date,location,startAge,endAge,gender,demographics,
+    //         AdsetName,date,location,startAge,endAge,gender,demographics,
     
-            // adLevel
+    //         // adLevel
     
-            adCreative,image,video,primaryText,headline,description,url});
+    //         adCreative,image,video,primaryText,headline,description,url});
 
-        const saved = await save.save();
+    //     const saved = await save.save();
 
-        if(saved){
-            return res.status(201).json({message: "user registered successfully!!"});
-        }else{
-            return res.status(500).json({error: "----------user registered FAILED---------------"});
-        }
+    //     if(saved){
+    //         return res.status(201).json({message: "user registered successfully!!"});
+    //     }else{
+    //         return res.status(500).json({error: "----------user registered FAILED---------------"});
+    //     }
 
 });
 
