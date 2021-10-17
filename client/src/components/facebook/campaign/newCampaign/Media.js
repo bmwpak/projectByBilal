@@ -85,7 +85,7 @@ const Media = (props) => {
             // // console.log(e);
 
             
-                                props.setVideo(e);
+                                props.setVideo(e.target.files[0]);
 
                                 // var file = e.target.files[0];
                                 // const video = document.createElement('video')
@@ -148,7 +148,7 @@ const Media = (props) => {
 
                {(props.name == 'Video Views')? null:
                        <div> 
-                    <input type="file" name='image' onChange={upload} style={{marginLeft:'30%',marginTop:'10%'}}/><br/>
+                    <input type="file" accept="images" name='image' onChange={upload} style={{marginLeft:'30%',marginTop:'10%'}}/><br/>
 
                     <img src={props.image} style={{width:'400px',height:'auto',marginLeft:'auto',marginBottom:'10%',marginTop:'1%'}} />
                     </div>}
@@ -171,7 +171,7 @@ const Media = (props) => {
          return(
             <>                                    
                     <div>
-                    <Dropzone
+                    {/* <Dropzone
                      
                     onDrop={uploadVideo}
                       >
@@ -182,7 +182,9 @@ const Media = (props) => {
                         </div>
                         </section>
                     )}
-                    </Dropzone>
+                    </Dropzone> */}
+
+                    <input type="file" name='video' onChange={uploadVideo} style={{marginLeft:'30%',marginTop:'10%'}}/><br/>
                     </div>
 
                     {/* <FileThumbnail

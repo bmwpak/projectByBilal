@@ -7,21 +7,22 @@ const transporter = require('../mailer/mail');
 const path = require('path');
 const multer = require('multer');
 const ejs = require('ejs');
-const formidable = require('formidable');
 
 
-const upload = multer({ dest : 'Public/'});
+
 
 const router = express.Router();
 
 // disk engine
 
-// const storage = multer.diskStorage({
-//     destination : './Public/uploads/',
-//     filename : function(req , file , callback){
-//         cb(null,Date.now() + path.extname(file.originalname));
-//     }
-// });
+const storage = multer.diskStorage({
+    destination : 'Public/',
+    filename : function(req , file , callback){
+        callback(null,file.originalname);
+    }
+});
+
+const upload = multer({ storage:storage});
 
 // //upload disk
 // const upload = multer({
@@ -280,11 +281,13 @@ router.post('/saveFiles' , (req , res) => {
 
 
 
-router.post('/saveNewCampFb' , upload.single('image') , (req , res) => {
+router.post('/saveNewCampFb', upload.single('image') , (req , res) => {
    
-    
-    console.log(req.file);
-    console.log(req.body);
+
+    const Location =  req.file.path;
+
+    console.log(Location);
+    // console.log(req.body);
 
     
 
@@ -336,10 +339,15 @@ router.post('/saveNewCampFb' , upload.single('image') , (req , res) => {
     // });
 
     // form.sendFile(__dirname);
+    const newFbCampData = req.body;
     
-    // // module.exports = newFbCampData;
 
-    // const fb = require('../fbInterface/interface');
+    // module.exports = Location;    
+
+    module.exports = {newFbCampData , Location};
+
+
+    const fb = require('../fbInterface/interface');
 
     // const start = fb(req.body);
 

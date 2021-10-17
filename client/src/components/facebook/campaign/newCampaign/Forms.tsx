@@ -104,7 +104,7 @@ export default function CampaignForm() {
 
     const [ image , setImage ] = useState();
 
-    const [ video , setVideo ] = useState('');
+    const [ video , setVideo ] = useState();
 
     const [ primaryText , setPrimaryText ] = useState('');
 
@@ -224,14 +224,19 @@ export default function CampaignForm() {
                 form.append("startAge",startAge.toString());
                 form.append("endAge",endAge.toString());
                 form.append("gender",gender);
-                form.append("demographics",demographics);
 
+                for(var i=0 ; i< demographics.length ; i++){
+                    form.append("demographics",demographics[i]);
+                }
                 // Ad-level values
                
                 form.append("AdName",AdName);
                 form.append("adCreative",adCreative);
-                form.append("image",image);
-                form.append("video",video);
+                if(adCreative == 'Image'){
+                    form.append("image",image);
+                }else if( adCreative == 'Video'){
+                    form.append("image",video);
+                }
                 form.append("primaryText",primaryText);
                 form.append("headline",headline);
                 form.append("description",description);
@@ -372,23 +377,7 @@ export default function CampaignForm() {
                             submittingValues.primaryText==''||submittingValues.headline==''||submittingValues.description==''||
                             submittingValues.url==''){
                                 alert('Fill all input fields');
-                            }else{
-                                const form = new FormData();
-
-                                form.append("first",image);
-                
-                                const resp = await fetch("/saveFiles" , {
-                                    method : "POST" ,
-                                    headers : {
-                                       
-                                        "type": "formData"
-                                    },
-                                     body : form
-                            
-                        
-                                
-                                   
-                                });
+                            }else{                                
                                 {postData()}
                             }
                         }else if(submittingValues.selection == 'Traffic'){
