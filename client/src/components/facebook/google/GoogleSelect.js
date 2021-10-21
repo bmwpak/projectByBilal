@@ -1,11 +1,10 @@
 import {useState} from 'react';
-import './fb.css';
-import NewCampaign from './campaign/newCampaign/NewCampaign';
-import OldCampaign from './campaign/oldCampaign/OldCampaign';
+
+import NewCampaign from './newCampaign/NewCampaign';
 
 
 
-const Selection = (props) => {
+const GoogleSelect = (props) => {
 
     const [ active , setActive ] = useState("new");
 
@@ -18,11 +17,11 @@ const Selection = (props) => {
   <div class="list-group-item" onClick={() => setActive("new")}>New Campaign</div>
   {/*   */}
   { active ==="new" && <NewCampaign preventDefault setCreateNew={props.setCreateNew} />}
-  { active === "old" && <OldCampaign preventDefault />}
+  {/* { active === "old" && <OldCampaign preventDefault />} */}
   </div>
 </div>
     </>
   )
 }
 
-export default Selection;
+export default GoogleSelect;

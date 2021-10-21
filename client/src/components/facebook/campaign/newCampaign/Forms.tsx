@@ -465,7 +465,7 @@ export default function CampaignForm() {
                         >
                         <Box paddingBottom={2}>
                         <FormControl component="fieldset">
-                        <FormLabel component="legend">Gender</FormLabel>
+                        <FormLabel component="legend">Campaign Type</FormLabel>
 
                         
                         <RadioGroup name="selection" value={optionValue} onChange={handleChange}>

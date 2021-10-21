@@ -393,7 +393,7 @@ const autoReplacement = await page.waitForXPath('//*[@id="campaignPlacementSecti
 //     // primary text
 
 
-  const primaryText = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[3]/div/div[2]/div/div/div[2]/div/div/div/div[3]/div/div/div[1]/div/div[1]/div[1]/div/div[2]/div/div[1]/div/div/div/div');
+  const primaryText = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div[4]/div/div/div[1]/div/div/div[1]/div[1]/div/div[2]/div/div[1]/div/div/div/div');
   await primaryText.click();
   await primaryText.type(newFbCampData.newFbCampData.primaryText);
 
@@ -409,7 +409,7 @@ const autoReplacement = await page.waitForXPath('//*[@id="campaignPlacementSecti
 
 //   // call to action
 
-  const callToAction = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[3]/div/div[2]/div/div/div[2]/div/div/div/div[3]/div/div/div[6]/div/div/div/div/div/div[2]/div/div[2]');
+  const callToAction = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div[4]/div/div/div[6]/div/div/div[2]/div/div/div/div/div/div/div/div/div[2]/div');
   await callToAction.click();
 
   const callToActionSelect = await page.$$('div[role="menuitemradio"]');
@@ -445,15 +445,15 @@ const autoReplacement = await page.waitForXPath('//*[@id="campaignPlacementSecti
 
 //   // apply
 
-  // // await page.click('div[role="none"]');
+  await page.click('div[role="none"]');
 
-  // const apply = await page.waitForSelector('body > div._10._8uff.uiLayer._4-hy._3qw > div._59s7._9l2g > div > div > div > div > div.mpql2fhx.c6q80kpu.ig151e16.sme1n7fz.qm5707zr.m9fzaka6.lftrkhxp.tds9wb2m.rwb8dzxj.hv94jbsx.f3aw7s6y > div > div.a53abz89.rgsc13q7.dfy4e4am.rwb8dzxj.diwav8v6.hkvtgs2m.apktr6ye.tlhxvphw.s1aoc7nz.q72jrxl3.k1bdusab.mk3evetr.nlmdo9b9 > div > div:nth-child(3) > div > span > div > div');
-  // await apply.click();
+  const apply = await page.waitForSelector('body > div._10._8uff.uiLayer._4-hy._3qw > div._59s7._9l2g > div > div > div > div > div.mpql2fhx.c6q80kpu.ig151e16.sme1n7fz.qm5707zr.m9fzaka6.lftrkhxp.tds9wb2m.rwb8dzxj.hv94jbsx.f3aw7s6y > div > div.a53abz89.rgsc13q7.dfy4e4am.rwb8dzxj.diwav8v6.hkvtgs2m.apktr6ye.tlhxvphw.s1aoc7nz.q72jrxl3.k1bdusab.mk3evetr.nlmdo9b9 > div > div:nth-child(3) > div > span > div > div');
+  await apply.click();
 
   console.log("pressed");
   await page.screenshot({ path: 'example.png' });
 
-  page.evaluate(evaluateRules);
+  // page.evaluate(evaluateRules);
 //   await browser.close();
 })();
 ;

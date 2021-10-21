@@ -270,11 +270,11 @@ router.post('/reset-password' , (req,res) => {
 });
 });
 
-router.post('/saveFiles' , (req , res) => {
+router.post('/saveGoogleCamp' , (req , res) => {
    
     
-    console.log(req.file);
-    console.log(req.body.demographics);
+    
+    console.log(req.body);
 
 });
 
@@ -378,7 +378,7 @@ router.post('/saveNewCampFb', upload.single('image') , (req , res) => {
     //     if(saved){
     //         return res.status(201).json({message: "user registered successfully!!"});
     //     }else{
-    //         return res.status(500).json({error: "----------user registered FAILED---------------"});
+    //         return res.status(500).json({error: "----------user registeration FAILED---------------"});
     //     }
 
 });

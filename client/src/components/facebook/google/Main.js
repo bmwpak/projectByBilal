@@ -1,7 +1,6 @@
 import {useState} from 'react';
-import './fb.css';
-import Selection from './Selection';
-import Main from './google/Main';
+import GoogleSelect from './GoogleSelect';
+
 
 const Fb = () => {
 
@@ -27,17 +26,17 @@ const Fb = () => {
 
   return(
     <>
-    <div class="container">
-  <h2>Basic List Group</h2>
-  <div class="list-group">
-    <div class="list-group-item" onClick={pressed}>Facebook</div>
+    
+  
+    <div class="list-group-item" onClick={pressed}>Google</div>
     <div>      
       { hide === "none" }
-      { hide === "selected" && <Selection  setCreateNew={setCreateNew} />}
-    </div>
-   <Main />
-   
-  </div>
+      { hide === "selected" && <GoogleSelect /> }
+    
+          
+    
+    
+  
 </div>
     </>
   )
