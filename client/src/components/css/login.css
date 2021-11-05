@@ -8,6 +8,10 @@ height: 100%;
 font-family: 'Numans', sans-serif;
 }
 
+body{
+  background-color: white;
+}
+
 .login-container{
 align-content: center;
 padding-right: 10px;

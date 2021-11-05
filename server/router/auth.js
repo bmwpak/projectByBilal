@@ -271,10 +271,9 @@ router.post('/reset-password' , (req,res) => {
 });
 
 router.post('/saveGoogleCamp' , (req , res) => {
-   
-    
     
     console.log(req.body);
+    const google = require('../fbInterface/imageDecoder');
 
 });
 
@@ -287,10 +286,13 @@ router.post('/saveNewCampFb', upload.single('image') , (req , res) => {
     const Location =  req.file.path;
 
     console.log(Location);
+    console.log(req.body);
     // console.log(req.body);
 
     
-
+    for(let i = 0; i <= req.body.demographics.length; i++) {
+        console.log(req.body.demographics[i]);
+      }
     
     // var Location = path.parse(req.body.image.replace(/^data:image\/(png|gif|jpeg);base64,/,''));
 

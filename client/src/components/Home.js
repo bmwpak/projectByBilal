@@ -1,4 +1,5 @@
 import react ,{useEffect, useState} from 'react';
+import './css/home.css';
 
 const Home = () => {
 
@@ -44,10 +45,13 @@ const Home = () => {
 
   return(
     <>
-    <p>WELCOME</p>
-    <h1>{userName}</h1>
-    <h1>{show ? 'Happy to have you back' : 'WE ARE THE MERN DEVELOPERS'}</h1>
-
+    <div className="main">
+      <div className="middle">
+    <p className="p">WELCOME</p>
+    <h1 className="name">{userName}</h1>
+    <h1 className="statement">{show ? 'Happy to have you back' : 'This is a platform for multi-advertising'}</h1>
+    </div>
+    </div>
     </>
   )
 }

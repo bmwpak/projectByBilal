@@ -140,7 +140,7 @@ export default function CampaignForm() {
 
        AdName: adName,
        adCreative: adCreative,
-       Image: image,
+       image: image,
        video: video,
         primaryText:primaryText,
         headline:headline,
@@ -225,7 +225,7 @@ export default function CampaignForm() {
                 form.append("endAge",endAge.toString());
                 form.append("gender",gender);
 
-                for(var i=0 ; i< demographics.length ; i++){
+                for(let i=0 ; i< demographics.length ; i++){
                     form.append("demographics",demographics[i]);
                 }
                 // Ad-level values

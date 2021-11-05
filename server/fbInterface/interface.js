@@ -1,16 +1,16 @@
 const puppeteer = require('puppeteer');
-const path = require('path');
-   
+const cookies = require('./fbCookies.json');
+const fs = require('fs');
 
-
-
+// add stealth plugin and use defaults (all evasion techniques)
+// const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+// puppeteer.use(StealthPlugin());
 
 const newFbCampData = require('../router/auth');
 
 // console.log(Location);
 // console.log(Location);
 console.log(newFbCampData);
-console.log(newFbCampData.newFbCampData.demographics[0]);
 // console.log(Location);
 // for(var i=0 ; i<=newFbCampData.demographics.array.size;i++){
 
@@ -23,7 +23,7 @@ console.log(newFbCampData.newFbCampData.demographics[0]);
 // // await page.waitForTimeout(2000);
 // // await page.keyboard.press('Enter');
 // }
-for(var i = 1; i < newFbCampData.newFbCampData.demographics.length; i++) {
+for(var i = 0; i < newFbCampData.newFbCampData.demographics.length; i++) {
   console.log(newFbCampData.newFbCampData.demographics[i]);
 }
 
@@ -39,34 +39,70 @@ function evaluateRules() {
   return;
 }
 
+
+
 const fb = 
 (async (e) => {
+
+  const locateChrome = require('locate-chrome');
+const executablePath = await new Promise(resolve => locateChrome(arg => resolve(arg)));
   // console.log(newFbCampData);
   const browser = await puppeteer.launch({
+    executablePath,
     headless: false,
     args:[
        '--start-maximized' // can also use '--start-fullscreen'
     ]}
     );
-  const page = await browser.newPage();
+    // const context = await browser.createIncognitoBrowserContext();
+    const page = await browser.newPage()
   await page.setDefaultNavigationTimeout(0);
   await page.setViewport({ width: 1366, height: 768});
-  await page.goto('https://business.facebook.com/login/?next=https%3A%2F%2Fbusiness.facebook.com%2F');
-  await page.type('#email',process.env.FBMAIL);
-  await page.type('#pass',process.env.FBPASS);
+
+//   if(Object.keys(cookies).length){
+//     await page.setCookie(...cookies);
+
+//   await page.goto('https://business.facebook.com/login/?next=https%3A%2F%2Fbusiness.facebook.com%2F', {waitUntil : 'networkidle2'});
+// }else{
+
+    await page.goto('https://business.facebook.com/login/?next=https%3A%2F%2Fbusiness.facebook.com%2F');
+    page.waitForNavigation();
+  await page.type('#email',process.env.FBMAIL, { delay: 50 });
+  await page.waitForTimeout(5000);
+  await page.type('#pass',process.env.FBPASS, { delay: 50 });
+
+
+  
+
   
   await Promise.all([
       page.waitForNavigation(),
     page.click('#loginbutton')
   ]);
 
+  await page.waitForTimeout(14000);
 
-  await page.goto('https://business.facebook.com/adsmanager/manage/?nav_entry_point=lep_123&nav_source=lwi_ad_center');
+  // let currentCookies = await page.cookies();
+
+  // fs.writeFileSync('./fbCookies.json',JSON.stringify(currentCookies));
+
+  await page.goto('https://www.facebook.com/adsmanager/manage/campaigns?act=1418730855186181&nav_entry_point=lep_123');
+  page.waitForNavigation();
+  await page.waitForTimeout(8000);
   
   const create = await page.waitForXPath('//*[@id="pe_toolbar"]/div/div/div/div[1]/div/div[1]');
   await create.click() ;
+  await page.waitForTimeout(1000);
+
+// }
 
 
+  // await page.goto('https://business.facebook.com/adsmanager/manage/?nav_entry_point=lep_123&nav_source=lwi_ad_center');
+  
+  // const create = await page.waitForXPath('//*[@id="pe_toolbar"]/div/div/div/div[1]/div/div[1]');
+  // await create.click() ;
+
+  await page.waitForTimeout(1000);
   // campaign type
   if(newFbCampData.newFbCampData.selection == 'Brand Awareness'){
   const campaignObjective = await page.waitForXPath('//*[@id="BRAND_AWARENESS"]/div/div[1]/div/input');
@@ -77,6 +113,7 @@ const fb =
   }else if(newFbCampData.newFbCampData.selection == 'Engagement'){
     const campaignObjective = await page.waitForXPath('//*[@id="SOCIAL_INTERACTION"]/div/div[1]/div/input');
   await campaignObjective.click();
+  await page.waitForTimeout(1000);
 
     if(newFbCampData.newFbCampData.engagement == 'Post engagement'){
       const engagementType = await page.waitForSelector('body > div._10._8uff.uiLayer._4-hy._3qw > div._59s7._9l2g > div > div > div > div > div.mpql2fhx.c6q80kpu.ig151e16.sme1n7fz.qm5707zr.m9fzaka6.lftrkhxp.tds9wb2m.rwb8dzxj.hv94jbsx.f3aw7s6y > div > div.puibpoiz.rwb8dzxj.yukb02kx.lftrkhxp.rgsc13q7.s7wjoji2.tds9wb2m > div.lmtvg2su.f030igb8.k1bdusab.tds9wb2m > div:nth-child(2) > div > div.dhycqfdu > div.ol91lf0t > div > div._89nb > div > div._3qn7._61-0._2fyh._3qnf > div:nth-child(1) > div._7_ol._3qn7._61-0._2fyi._3qng > div > div');
@@ -99,23 +136,39 @@ const fb =
     const campaignObjective = await page.waitForXPath('//*[@id="CONVERSIONS"]/div/div[1]/div/input');
     await campaignObjective.click();
   }
+
+  await page.waitForTimeout(1000);
   
   const cont = await page.waitForXPath('//*[@id="facebook"]/body/div[6]/div[2]/div/div/div/div/div[1]/div/div[3]/span[2]/div/div[2]/button/div/div');
   await cont.click();
 
+  await page.waitForTimeout(8000);
+
   const campaignName = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div[1]/div[1]/div/div/div/div/div/div/div/div/div/div/div[1]/div[2]/span');
   await campaignName.click({clickCount:3});
-  await campaignName.type(newFbCampData.newFbCampData.CampaignName);
 
-  const onBudgetOptimization = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div[1]/div[5]/div/div/div/div/div[1]/div/div/div[2]/div/div');
+  await page.waitForTimeout(1000);
+  await campaignName.type(newFbCampData.newFbCampData.CampaignName, { delay: 50 });
+
+  await page.waitForTimeout(1000);
+
+  const onBudgetOptimization = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div[1]/div[5]/div/div/div/div/div[1]/div/div/div[2]/div/div/div/span');
   await onBudgetOptimization.click();
 
-  const next = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div/div[2]/div/div/button/div/div');
+  await page.waitForTimeout(1000);
+
+  const next = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div[1]/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div/div[2]/div/div/button/div/div');
   await next.click();
+
+  await page.waitForTimeout(8000);
 
   const adsetName = await page.waitForXPath('//*[@id="campaignNameSection"]/div/div/div/div/div/div/div/div/div/div/div/div[1]/div[2]/span');
   await adsetName.click({clickCount:3});
-  await adsetName.type(newFbCampData.newFbCampData.AdsetName);
+
+  await page.waitForTimeout(1000);
+  await adsetName.type(newFbCampData.newFbCampData.AdsetName, { delay: 50 });
+
+  await page.waitForTimeout(1000);
 
 
 
@@ -153,19 +206,36 @@ console.log(year+'-' + month + '-'+dt + '-' + hour + '-' + min);
 
   const selectors = await page.$$('input[placeholder="mm/dd/yyyy"]');
   await selectors[0].click();
-  await selectors[0].type( month +'-'+ dt + '-' +year );
+
+  await page.waitForTimeout(1000);
+
+  await selectors[0].type( month +'-'+ dt + '-' +year , { delay: 50 });
+
+  await page.waitForTimeout(1000);
 
   const setHours = await page.waitForXPath('//*[@id="campaignBasicSection"]/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div[1]/div/div[2]/div/span[1]/div/div/div/div[1]/div[2]/div[1]/div');
   await setHours.click({clickCount:1});
+
+  await page.waitForTimeout(1000);
   await setHours.type(hour.toString() , { delay: 500});
+
+  await page.waitForTimeout(1000);
 
   const setMin = await page.waitForXPath('//*[@id="campaignBasicSection"]/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div[1]/div/div[2]/div/span[1]/div/div/div/div[1]/div[2]/div[2]/div');
   await setMin.click({clickCount:3});
-  await setMin.type(min.toString());
+
+  await page.waitForTimeout(1000);
+  await setMin.type(min.toString(), { delay: 50 });
+
+  await page.waitForTimeout(1000);
 
   const setAm = await page.waitForXPath('//*[@id="campaignBasicSection"]/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div[1]/div/div[2]/div/span[1]/div/div/div/div[1]/div[2]/div[3]/div');
   await setAm.click({clickCount:2});
-  await setAm.type(Am_Pm);
+
+  await page.waitForTimeout(1000);
+  await setAm.type(Am_Pm, { delay: 50 });
+
+  await page.waitForTimeout(1000);
 
   //----------------end time selection---------------------------
 
@@ -201,12 +271,18 @@ console.log(year+'-' + month + '-'+dt + '-' + hour + '-' + min);
 const cancelLocation = await page.waitForXPath('//*[@id="LOCATION"]/div[2]/div[1]/ul/li/ul/li[1]/div/div[2]/span/button/span[2]/i');
 await cancelLocation.click();
 
+await page.waitForTimeout(1000);
+
 // select location
 
- await page.type('input[placeholder="Search Locations"]',newFbCampData.newFbCampData.location);
+ await page.type('input[placeholder="Search Locations"]',newFbCampData.newFbCampData.location, { delay: 50 });
  
  await page.waitForTimeout(5000);
+
+ await page.waitForTimeout(2000);
  await page.keyboard.press('Enter');
+
+ await page.waitForTimeout(2000);
 
 // select age
 
@@ -218,11 +294,19 @@ await cancelLocation.click();
   
   const startAge = await page.waitForXPath('//*[@id="AGE"]/div/div/div/div[2]/div/span[1]/span/span');
   await startAge.click();
+
+  await page.waitForTimeout(1000);
   await page.click('div[value="'+ newFbCampData.newFbCampData.startAge +'"]');
+
+  await page.waitForTimeout(1000);
 
   const endAge = await page.waitForXPath('//*[@id="AGE"]/div/div/div/div[4]/div/span[1]/span/span');
   await endAge.click();
+
+  await page.waitForTimeout(1000);
   await page.click('div[value="'+ newFbCampData.newFbCampData.endAge +'"]');
+
+  await page.waitForTimeout(1000);
 
   // select gender
 
@@ -242,6 +326,7 @@ await cancelLocation.click();
    await selectGender.click();
   }
 
+  await page.waitForTimeout(2000);
   // detailed targeting
 
   // try{
@@ -252,16 +337,19 @@ await cancelLocation.click();
 
   for(var i=1 ; i< newFbCampData.newFbCampData.demographics.length;i++){
     if(newFbCampData.newFbCampData.demographics[i] == ''){
+      await page.waitForTimeout(1000);
       console.log('demographic no. '+i+'is empty');
     }else{
+      await page.waitForTimeout(2000);
       await page.click('input[placeholder="Add demographics, interests or behaviors"]');
 
-      await page.type('input[placeholder="Add demographics, interests or behaviors"]', newFbCampData.newFbCampData.demographics[i]);
+      await page.type('input[placeholder="Add demographics, interests or behaviors"]', newFbCampData.newFbCampData.demographics[i], { delay: 50 });
       
       await page.waitForTimeout(4000);
       await page.keyboard.press('Enter');
     }
   }
+  await page.waitForTimeout(1500);
 // select language  
 
   
@@ -278,6 +366,7 @@ await page.type('input[placeholder="Search Languages"]','english');
 await page.waitForTimeout(1000);
 // await page.keyboard.press('ArrowDown');
 await page.keyboard.press('Enter');
+await page.waitForTimeout(1000);
 
 //auto replacement
 
@@ -287,23 +376,33 @@ const autoReplacement = await page.waitForXPath('//*[@id="campaignPlacementSecti
 
  // move to ad name page
 
- const toAdname = await page.waitForXPath('//*[@id="AdsPECampaignEditor"]/div/div[2]/div/div/div/div/div[2]/div/div[2]/button');
+ const toAdname = await page.waitForXPath('//*[@id="AdsPECampaignEditor"]/div/div[2]/div/div/div/div/div[2]/div/div[2]/button/div/div');
  await toAdname.click();
+
+ await page.waitForTimeout(1000);
 
  // ad name
 
  const adName = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div/div/div/div[1]/div[2]/span');
  await adName.click({clickCount:3});
- await adName.type(newFbCampData.newFbCampData.AdName);
+ await page.waitForTimeout(1000);
+ await adName.type(newFbCampData.newFbCampData.AdName, { delay: 50 });
+
+ await page.waitForTimeout(1000);
 
  
    // select facebook page
 
   const optionSelection = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[2]/div/div/div[2]/div/div/div/div/div/div[1]/div[2]/div/div[2]/span');
   await optionSelection.click();
+
+  await page.waitForTimeout(1000);
   await page.click('input[placeholder="Search by Page name or ID"]');
-  await page.type('input[placeholder="Search by Page name or ID"]','Multi-ad');
+  await page.waitForTimeout(1000);
+  await page.type('input[placeholder="Search by Page name or ID"]','Multi-ad', { delay: 50 });
+  await page.waitForTimeout(1000);
   await page.keyboard.press('Enter');
+  await page.waitForTimeout(1000);
 
   // try{
  // add media
@@ -311,6 +410,8 @@ const autoReplacement = await page.waitForXPath('//*[@id="campaignPlacementSecti
  
  const clickAddMedia = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div[3]/div/div/div[3]/div[1]/span[1]/div/button/div/div');
  await clickAddMedia.click();
+
+ await page.waitForTimeout(1000);
 
  if(newFbCampData.newFbCampData.adCreative == 'Image'){
   await page.click('li[data-testid="browse-image-library-dropdown-item"]');
@@ -334,10 +435,14 @@ const autoReplacement = await page.waitForXPath('//*[@id="campaignPlacementSecti
   const toCrop = await page.waitForXPath('//*[@id="facebook"]/body/div[8]/div[2]/div/div/div/div/div[1]/div/div/div[1]/div[2]/div[2]/div/div/div[3]/div/div[3]/div');
   await toCrop.click();
 
+  await page.waitForTimeout(1000);
+
 //   // to optimize
 
   const toOptimize = await page.waitForXPath('//*[@id="facebook"]/body/div[8]/div[2]/div/div/div/div/div[1]/div/div/div[1]/div[2]/div[2]/div/div/div[3]/div/div[3]/div/span/div/div/div');
   await toOptimize.click();
+
+  await page.waitForTimeout(1000);
 
 //   // image-selection completed
 
@@ -395,60 +500,82 @@ const autoReplacement = await page.waitForXPath('//*[@id="campaignPlacementSecti
 
   const primaryText = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div[4]/div/div/div[1]/div/div/div[1]/div[1]/div/div[2]/div/div[1]/div/div/div/div');
   await primaryText.click();
-  await primaryText.type(newFbCampData.newFbCampData.primaryText);
+
+  await page.waitForTimeout(1000);
+  await primaryText.type(newFbCampData.newFbCampData.primaryText, { delay: 50 });
+
+  await page.waitForTimeout(1000);
 
 //   // Headline
 
   const inputs = await page.$$('textarea[dir="auto"]');
 
-  await inputs[0].type(newFbCampData.newFbCampData.headline);
+  await page.waitForTimeout(1000);
+
+  await inputs[0].type(newFbCampData.newFbCampData.headline, { delay: 50 });
+
+  await page.waitForTimeout(1000);
 
 //   // Description
 
-  await inputs[1].type(newFbCampData.newFbCampData.description);
+  await inputs[1].type(newFbCampData.newFbCampData.description, { delay: 50 });
+  await page.waitForTimeout(1000);
 
 //   // call to action
 
   const callToAction = await page.waitForXPath('//*[@id="ads_pe_container"]/div[1]/div/div/div[2]/div/div[2]/div[2]/div[3]/div/div[2]/div/div/div/div[1]/div/div/div[2]/div/div[1]/div[1]/div/div[2]/div[3]/div/div[2]/div/div/div/div[2]/div/div/div/div[4]/div/div/div[6]/div/div/div[2]/div/div/div/div/div/div/div/div/div[2]/div');
   await callToAction.click();
+  await page.waitForTimeout(1000);
 
   const callToActionSelect = await page.$$('div[role="menuitemradio"]');
+  await page.waitForTimeout(1000);
 
   await callToActionSelect[13].click();
+  await page.waitForTimeout(1000);
 
 //   // website URL
 
-  await inputs[2].type(newFbCampData.newFbCampData.url);
+  await inputs[2].type(newFbCampData.newFbCampData.url, { delay: 50 });
+  await page.waitForTimeout(1000);
 
 //   // url parameters
 
   const urlParameter = await page.waitForSelector('#ads_pe_container > div:nth-child(1) > div > div > div._2ww2 > div > div._49wu > div._2k0c._96v5._8_1l > div._2k0g > div > div._22s_._7ayd._8z1m > div > div > div > div._8y-d > div > div > div:nth-child(2) > div > div._3qn7._61-0._2fyi._1a9e > div._6g3g._1q-5 > div > div:nth-child(2) > div:nth-child(6) > div > div > div._ww_ > div > div > div > div > div > div:nth-child(2) > div:nth-child(2) > div > a', {visible: true});
   await urlParameter.click();
+  await page.waitForTimeout(1000);
 
 //   // campaign source
 
   const parameters = await page.$$('input[placeholder="Select a dynamic parameter or enter a value"]');
 
+  await page.waitForTimeout(1000);
+
   await parameters[0].type('Facebook');
+  await page.waitForTimeout(1000);
 
 //   // Campaign Medium
 
   await parameters[1].type('Advertising');
+  await page.waitForTimeout(1000);
 
 //   // Campaign Name
 
   await parameters[2].type('{{campaign.name}}');
+  await page.waitForTimeout(1000);
 
 //   // Campaign Content
 
-  await parameters[3].type('{{ad.name}}');
+  await parameters[3].type('{{ad.name}}', { delay: 50 });
+  await page.waitForTimeout(1000);
 
 //   // apply
 
   await page.click('div[role="none"]');
+  await page.waitForTimeout(1000);
 
   const apply = await page.waitForSelector('body > div._10._8uff.uiLayer._4-hy._3qw > div._59s7._9l2g > div > div > div > div > div.mpql2fhx.c6q80kpu.ig151e16.sme1n7fz.qm5707zr.m9fzaka6.lftrkhxp.tds9wb2m.rwb8dzxj.hv94jbsx.f3aw7s6y > div > div.a53abz89.rgsc13q7.dfy4e4am.rwb8dzxj.diwav8v6.hkvtgs2m.apktr6ye.tlhxvphw.s1aoc7nz.q72jrxl3.k1bdusab.mk3evetr.nlmdo9b9 > div > div:nth-child(3) > div > span > div > div');
   await apply.click();
+  await page.waitForTimeout(1000);
 
   console.log("pressed");
   await page.screenshot({ path: 'example.png' });
@@ -456,5 +583,5 @@ const autoReplacement = await page.waitForXPath('//*[@id="campaignPlacementSecti
   // page.evaluate(evaluateRules);
 //   await browser.close();
 })();
-;
+
 module.exoorts = fb;
