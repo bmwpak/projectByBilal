@@ -11,6 +11,7 @@ import Logout from './components/Logout';
 import ErrorPage from './components/ErrorPage';
 import ResetPassword from './components/ResetPassword';
 import Fb from './components/facebook/Fb';
+import Show from './components/Show';
 
 import {initialState , reducer} from '../src/reducer/UserReducer';
 
@@ -48,6 +49,10 @@ import {initialState , reducer} from '../src/reducer/UserReducer';
 
            <Route  path="/logout">
                <Logout />
+           </Route>
+
+           <Route  path="/Show">
+               <Show />
            </Route>
 
            <Route  path="/fb">

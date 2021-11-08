@@ -161,7 +161,7 @@ export default function CampaignForm() {
 
         // adLevel
 
-        AdName,adCreative,Image,video,primaryText,headline,description,url} = submittingValues;
+        AdName,adCreative,image,video,primaryText,headline,description,url} = submittingValues;
 
 
        
@@ -370,7 +370,7 @@ export default function CampaignForm() {
 
                         // console.log('values' , submittingValues);
                         if(submittingValues.selection == 'Brand Awareness'){
-                            if((submittingValues.adCreative == 'Image' && submittingValues.Image == '')||
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
                             (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
@@ -381,7 +381,7 @@ export default function CampaignForm() {
                                 {postData()}
                             }
                         }else if(submittingValues.selection == 'Traffic'){
-                            if((submittingValues.adCreative == 'Image' && submittingValues.Image == '')||
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
                             (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
@@ -392,7 +392,7 @@ export default function CampaignForm() {
                                 {postData()}
                             }
                         }else if((submittingValues.selection == 'Engagement')&&(submittingValues.engagement == 'Post engagement')){
-                            if((submittingValues.adCreative == 'Image' && submittingValues.Image == '')||
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
                             (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
@@ -402,7 +402,7 @@ export default function CampaignForm() {
                                 {postData()}
                             }
                         }else if((submittingValues.selection == 'Engagement')&&(submittingValues.engagement == 'Page likes')){
-                            if((submittingValues.adCreative == 'Image' && submittingValues.Image == '')||
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
                             (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||
@@ -440,7 +440,7 @@ export default function CampaignForm() {
                                 {postData()}
                             }
                         }if(submittingValues.selection == 'Conversions'){
-                            if((submittingValues.adCreative == 'Image' && submittingValues.Image == '')||
+                            if((submittingValues.adCreative == 'Image' && submittingValues.image == '')||
                             (submittingValues.adCreative == 'Video' && submittingValues.video == '')){
                                 alert('please select '+submittingValues.adCreative);
                             }else if(submittingValues.CampaignName==''||submittingValues.AdsetName==''||submittingValues.location==''||

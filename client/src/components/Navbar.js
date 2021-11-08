@@ -1,4 +1,4 @@
-import React , {useContext} from 'react';
+import React , {useContext, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { NavLink } from "react-router-dom";
 
@@ -9,37 +9,24 @@ const Navbar = () => {
 
   const {state , dispatch} = useContext(UserContext);
 
+//   useEffect(() => {
+//     const data = String(window.localStorage.getItem('json'));
+//     const formData = JSON.parse(data);
+
+//     dispatch(formData.state);
+
+//   },[]);
+
+//   useEffect(() =>{
+//     window.localStorage.setItem("json",JSON.stringify(state));
+// });
+
   const RenderMenu = () => {
 
-    if(state){
+    if(!state){
       return(
         <>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item active">
-                <NavLink className="nav-link" to="/">Home</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/about">About</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/contact">Contact</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/logout">Logout</NavLink>
-              </li>
-              
-              
-            </ul>
-            
-          </div>
-        </>
-      )
-    }else{
-
-      return(
-        <>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item active">
                   <NavLink className="nav-link" to="/">Home</NavLink>
@@ -61,7 +48,33 @@ const Navbar = () => {
                 
               </ul>
               
-            </div>
+            </div> 
+        </>
+      )
+    }else{
+
+      return(
+        <>
+            
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item active"> 
+                <NavLink className="nav-link" to="/">Home</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/about">About</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/contact">Contact</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/logout">Logout</NavLink>
+              </li>
+              
+              
+            </ul>
+            
+          </div>
         </>
       )
     }
@@ -72,7 +85,7 @@ const Navbar = () => {
     <>
 
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <NavLink className="navbar-brand" to="/">Navbar</NavLink>
+        <NavLink className="navbar-brand" to="/">Cross-Ads</NavLink>
   
         <RenderMenu />
   
