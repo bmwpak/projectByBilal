@@ -52,45 +52,66 @@
 // export default Show;
 
 import React from 'react';
+import { useHistory } from "react-router-dom";
 
-class Show extends React.Component{
 
-    constructor(){
-        super();
-        this.state = {
+
+// const Post = (props) =>{
+//     const data = props.data;
+
+//     console.log(data);
+
+//     // useHistory('/Fb',{choosen:data});
+// }
+
+const Show=()=> {
+
+    const history = useHistory();
+    // constructor(){
+    //     super();
+        const state = {
             hobbies:[]
         }
 
-        this.handleInputChange = this.handleInputChange.bind(this);
-    }
+    //     this.handleInputChange = this.handleInputChange.bind(this);
+    // }
 
-    handleInputChange(event) {
+    const handleInputChange =(event) => {
         const target = event.target;
         var value = target.value;
-        var index = this.state.hobbies.indexOf(target.value);
+        var index = state.hobbies.indexOf(target.value);
         
         if(target.checked){
-            this.state.hobbies.push(value);
+            state.hobbies.push(value);
             // this.state.hobbies[value] = value;   
         }else{
-            this.state.hobbies.splice(index,1);
+            state.hobbies.splice(index,1);
         }
         
     }
 
-    submit(){
-        if(this.state.hobbies == ""){
+    const post = () => {
+        
+        const data = state.hobbies;
+
+            console.log(data);
+
+            history.push('/fb',{choosen:data});
+    } 
+
+    const onSubmit = () =>{
+        if(state.hobbies == ""){
             alert("Select a platform");
         }else{
-            console.log(this.state.hobbies);
 
+            // this.state.useHistory.push() 
+            post();           
 
         }
         
     }
 
-    render(){
-        return(
+    return(
             <div>
                 <div class="row">
                     <div class="col-md-6 offset-md-4">
@@ -101,11 +122,11 @@ class Show extends React.Component{
                             <div class="form-group col-md-6 font-weight-bold">
                                 <label>Platforms Avialable :</label><br />
                                 <div class="form-check form-check-inline font-weight-bold">
-                                    <input class="form-check-input" type="checkbox" name="hobbies" id="inlineCheckboxh1" value="Facebook" onChange={this.handleInputChange} />
+                                    <input class="form-check-input" type="checkbox" name="hobbies" id="inlineCheckboxh1" value="Facebook" onChange={handleInputChange} />
                                     <label class="form-check-label" for="inlineCheckboxh1">Facebook</label>
                                 </div><br/><br/>
                                 <div class="form-check form-check-inline font-weight-bold">
-                                    <input class="form-check-input" type="checkbox" name="hobbies" id="inlineCheckboxh2" value="Google" onChange={this.handleInputChange} />
+                                    <input class="form-check-input" type="checkbox" name="hobbies" id="inlineCheckboxh2" value="Google" onChange={handleInputChange} />
                                     <label class="form-check-label" for="inlineCheckboxh2">Google</label>
                                 </div><br/><br/>
                                
@@ -114,7 +135,7 @@ class Show extends React.Component{
 
                         <div class="form-row">
                             <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-primary" onClick={()=>this.submit()}>Submit</button>
+                                <button type="submit" class="btn btn-primary" onClick={()=>onSubmit()}>Submit</button>
                             </div>
                         </div>
                         
@@ -123,6 +144,7 @@ class Show extends React.Component{
             </div>
         )  
     }
-}
+
+
 
 export default Show;

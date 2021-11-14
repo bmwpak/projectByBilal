@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 
 
 const newCampFbSchema = new mongoose.Schema({
+    email:{
+        type: String
+    },
     CampaignType : {
         type : String,
     },

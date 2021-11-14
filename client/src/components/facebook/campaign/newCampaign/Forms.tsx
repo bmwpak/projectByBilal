@@ -9,6 +9,7 @@ import CampaignSelect  from './CampaignSelect';
 import AdsetSetting  from './AdsetSetting';
 import './Form.css'
 import { useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import NewCampaign from './NewCampaign';
 import { initialState } from '../../../../reducer/UserReducer';
 import AdLevel from './AdLevel';
@@ -23,6 +24,10 @@ const sleep = (time: number | undefined) => new Promise((acc) => setTimeout(acc,
 
 
 export default function CampaignForm() {
+
+    const history = useHistory();
+
+   
 
     // initial values
 
@@ -118,7 +123,40 @@ export default function CampaignForm() {
         
     //     setOtherValue(item);
 
-    // };   
+    // }; 
+    
+    const [userData , setUserData] = useState({});
+
+    const getData = async () => {
+  
+      try{
+  
+        const res = await fetch("/about" , {
+          method:"GET",
+          headers:{
+            
+            "Content-Type" : "application/json"
+          }
+      
+        });
+  
+        const data = await res.json();
+  
+        setUserData(data);
+  
+        if(res.status != 200){
+          const error = new Error(res.error);
+          throw error;
+        }
+  
+      }catch(err){
+        console.log(err);
+  
+        history.push('/login');
+  
+      }
+  
+    }
     
     const submittingValues = {
 
@@ -209,6 +247,7 @@ export default function CampaignForm() {
             }else if( i == 0 ){         
                 console.log('2');
                 const form = new FormData();
+                form.append("email",userData.email);
 
                 // campign
 
@@ -296,25 +335,18 @@ export default function CampaignForm() {
 
     // props.setCreateNew(submittingValues);
 
+    // useEffect(() => {
+
+    //     getData();
+  
+    // } , []);
+
     useEffect(() => {
+
+
         const data = String(window.localStorage.getItem('saved'));
         const formData = JSON.parse(data);
-        // setSavedData(formData);
-    //     setSavedData({
-    //         selection: formData.selection,
-    //     engagement: formData.engagement,
-    //     CampaignName: formData.CampaignName,
-
-    //    //adset attributes
-
-    //    AdsetName: formData.AdsetName,
-    //    date: formData.date,
-    //    location: formData.location,
-    //    startAge: formData.startAge,
-    //    endAge: formData.endAge,
-    //    gender: formData.gender,
-    //    demographics:formData.demographics,
-    //     });
+    
 
         // for campaign page
         setOptionValue(formData.selection);

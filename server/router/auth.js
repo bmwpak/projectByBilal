@@ -221,6 +221,12 @@ router.post('/contact' , authenticate , async (req , res) => {
 
 });
 
+// --------------------------------get-ad-data----------------------------------------------------
+
+// router.get('/about' , authenticate , (req , res) => {
+//     res.send(req.rootUser);
+// });
+
 
 router.post('/reset-password' , (req,res) => {
     
@@ -280,7 +286,7 @@ router.post('/saveGoogleCamp' , (req , res) => {
 
 
 
-router.post('/saveNewCampFb', upload.single('image') , (req , res) => {
+router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
    
 
     const Location =  req.file.path;
@@ -353,7 +359,7 @@ router.post('/saveNewCampFb', upload.single('image') , (req , res) => {
 
     // const start = fb(req.body);
 
-    // const {selection,engagement,CampaignName,
+    // const {email,selection,engagement,CampaignName,
 
     //     //adset attributes
 
@@ -363,9 +369,9 @@ router.post('/saveNewCampFb', upload.single('image') , (req , res) => {
 
     //     AdName,adCreative,image,video,primaryText,headline,description,url} = req.body;
 
-    //     // console.log(AdsetName);
+    // //     // console.log(AdsetName);
 
-    //     const save = new newFbSave({selection,engagement,CampaignName,
+    //     const save = new newFbSave({email,selection,engagement,CampaignName,
 
     //         //adset attributes
     

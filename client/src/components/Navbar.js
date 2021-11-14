@@ -62,6 +62,9 @@ const Navbar = () => {
                 <NavLink className="nav-link" to="/">Home</NavLink>
               </li>
               <li className="nav-item">
+                <NavLink className="nav-link" to="/ads">Ads</NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink className="nav-link" to="/about">About</NavLink>
               </li>
               <li className="nav-item">
@@ -69,8 +72,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/logout">Logout</NavLink>
-              </li>
-              
+              </li>              
               
             </ul>
             
