@@ -37,6 +37,8 @@ const Register = require("../model/userSchema");
 
 const newFbSave = require("../model/newCampFbSchema");
 
+const newGoogleSave = require("../model/googleSchema");
+
 router.get('/' , (req , res) => {
     res.send("Home Page");
 });
@@ -276,10 +278,47 @@ router.post('/reset-password' , (req,res) => {
 });
 });
 
-router.post('/saveGoogleCamp' , (req , res) => {
+router.post('/saveGoogleCamp' ,async (req , res) => {
     
     console.log(req.body);
-    const google = require('../fbInterface/imageDecoder');
+
+     const {email,
+        businessName,
+        website,
+        desktopMobile,
+
+        headline1,
+        headline2,
+        headline3,
+        description1,
+        description2,
+
+        adsetLocation} = req.body;
+
+    //     // console.log(AdsetName);
+
+        const save = new newGoogleSave({email, 
+            businessName,
+            website,
+            desktopMobile,
+    
+            headline1,
+            headline2,
+            headline3,
+            description1,
+            description2,
+    
+            adsetLocation});
+
+        const saved = await save.save();
+
+        if(saved){
+            return res.status(201).json({message: "user registered successfully!!"});
+        }else{
+            return res.status(500).json({error: "----------Google User Ad Information registration FAILED---------------"});
+        }
+
+    // const google = require('../fbInterface/imageDecoder');
 
 });
 

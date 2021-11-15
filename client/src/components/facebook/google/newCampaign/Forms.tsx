@@ -14,6 +14,8 @@ import { initialState } from '../../../../reducer/UserReducer';
 import AdLevel from './AdLevel';
 import { VideocamOffRounded } from '@material-ui/icons';
 import Location from './Location';
+import { useHistory } from "react-router-dom";
+
 
 // import Submit from './Submit';
 
@@ -26,10 +28,13 @@ const sleep = (time: number | undefined) => new Promise((acc) => setTimeout(acc,
 
 export default function CampaignForm() {
 
+    const history = useHistory();
+
     // initial values
 
     const initialValues = {
 
+        email : '',
         businessName: '',
         website: '',
         desktopMobile: '',
@@ -77,12 +82,44 @@ export default function CampaignForm() {
       }; 
 
 
+      const [userData , setUserData] = useState({});
 
+      const getData = async () => {
+    
+        try{
+    
+          const res = await fetch("/about" , {
+            method:"GET",
+            headers:{
+              
+              "Content-Type" : "application/json"
+            }
+        
+          });
+    
+          const data = await res.json();
+    
+          setUserData(data);
+    
+          if(res.status != 200){
+            const error = new Error(res.error);
+            throw error;
+          }
+    
+        }catch(err){
+          console.log(err);
+    
+          history.push('/login');
+    
+        }
+    
+      }
    
      
     
     const submittingValues = {
 
+        email : userData.email,
         businessName: business,
         website: website,
         desktopMobile: desktopMobile,
@@ -103,6 +140,7 @@ export default function CampaignForm() {
         console.log(submittingValues);
 
 		const {
+            email,
             businessName,
             website,
             desktopMobile,
@@ -149,7 +187,9 @@ export default function CampaignForm() {
                        
                         "Content-type": "application/json"
                     },
-                     body : JSON.stringify({ businessName,
+                     body : JSON.stringify({ 
+                        email,
+                        businessName,
                         website,
                         desktopMobile,
                 
@@ -187,6 +227,14 @@ export default function CampaignForm() {
 	
 
     // props.setCreateNew(submittingValues);
+
+    // props.setCreateNew(submittingValues);
+
+    useEffect(() => {
+
+        getData();
+  
+    } , []);
 
     useEffect(() => {
         const data = String(window.localStorage.getItem('google'));

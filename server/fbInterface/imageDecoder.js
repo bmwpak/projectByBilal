@@ -19,13 +19,15 @@ const google =
   await page.setViewport({ width: 1366, height: 768});
   await page.goto('https://accounts.google.com/signin/v2/challenge/pwd?service=adwords&passive=1209600&osid=1&continue=https%3A%2F%2Fads.google.com%2Fnav%2Flogin&followup=https%3A%2F%2Fads.google.com%2Fnav%2Flogin&flowName=GlifWebSignIn&flowEntry=ServiceLogin&cid=1&navigationDirection=forward&TL=AM3QAYZ0LBaFmL6kTMmo0GqaXkPnxB2xjXemYaJm-KDdoC3KMKhUw4OjBnqn7vwg');
  
-  // await page.type('input[aria-label="Email or phone"]','bilal1munawar@gmail.com');
-  // await page.keyboard.press('Enter');
+  await page.type('input[aria-label="Email or phone"]','bilal1munawar@gmail.com');
+  await page.keyboard.press('Enter');
 
   await page.waitForTimeout(10000);  
 
   await page.type('input[type="password"]','alimentunground');
   await page.keyboard.press('Enter');
+
+  
 
   // await page.type('#inputTextArea', Location);
 //   await page.screenshot({ path: 'example.png' });
