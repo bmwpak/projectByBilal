@@ -237,7 +237,7 @@ router.post('/reset-password' , (req,res) => {
 
         if( !email )
         {
-            return res.status(400).json({error : "Fill the Field"});
+            return res.status(400).json({error : "Fill the Fields"});
         }
 
         crypto.randomBytes(32, (err,Buffer) => {
@@ -278,6 +278,54 @@ router.post('/reset-password' , (req,res) => {
 });
 });
 
+// =================================get Data from google ad storage==============================
+
+router.get('/getGoogleData' ,authenticate ,async (req , res , next) => {
+
+
+    const googleUser = await newGoogleSave.find({ email : req.email});
+
+    if(!googleUser)
+     {
+          throw new Error('User Not Found');
+    }else{
+
+   
+    req.googleUser = googleUser;
+    console.log("----------------got google data----------");
+    res.send(req.googleUser);
+    // next();
+    }
+    // const userContact = await newGoogleSave.findOne({ email : req.rootUser.email});
+    
+});
+
+
+// =================================get Data from facebook ad storage==============================
+
+router.get('/getFacebookData' ,authenticate ,async (req , res , next) => {
+
+
+    const facebookUser = await newFbSave.find({ email : req.email});
+
+    if(!facebookUser)
+     {
+          throw new Error('Fb User Not Found');
+    }else{
+
+   
+    req.facebookUser = facebookUser;
+    console.log("----------------got facebook data----------");
+    console.log(facebookUser);
+    res.send(req.facebookUser);
+    // next();
+    }
+    // const userContact = await newGoogleSave.findOne({ email : req.rootUser.email});
+    
+});
+
+
+//=========================save google ad-data========================
 router.post('/saveGoogleCamp' ,async (req , res) => {
     
     console.log(req.body);
@@ -295,7 +343,6 @@ router.post('/saveGoogleCamp' ,async (req , res) => {
 
         adsetLocation} = req.body;
 
-    //     // console.log(AdsetName);
 
         const save = new newGoogleSave({email, 
             businessName,
@@ -313,7 +360,7 @@ router.post('/saveGoogleCamp' ,async (req , res) => {
         const saved = await save.save();
 
         if(saved){
-            return res.status(201).json({message: "user registered successfully!!"});
+            return res.status(201).json({message: "Google Ad information registered successfully!!"});
         }else{
             return res.status(500).json({error: "----------Google User Ad Information registration FAILED---------------"});
         }
@@ -328,9 +375,9 @@ router.post('/saveGoogleCamp' ,async (req , res) => {
 router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
    
 
-    const Location =  req.file.path;
+    // const Location =  req.file.path;
 
-    console.log(Location);
+    // console.log(Location);
     console.log(req.body);
     // console.log(req.body);
 
@@ -391,42 +438,42 @@ router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
 
     // module.exports = Location;    
 
-    module.exports = {newFbCampData , Location};
+    // module.exports = {newFbCampData , Location};
 
 
-    const fb = require('../fbInterface/interface');
+    // const fb = require('../fbInterface/interface');
 
     // const start = fb(req.body);
 
-    // const {email,selection,engagement,CampaignName,
+    const {email,selection,engagement,CampaignName,
 
-    //     //adset attributes
+        //adset attributes
 
-    //     AdsetName,date,location,startAge,endAge,gender,demographics,
+        AdsetName,date,location,startAge,endAge,gender,demographics,
 
-    //     // adLevel
+        // adLevel
 
-    //     AdName,adCreative,image,video,primaryText,headline,description,url} = req.body;
+        AdName,adCreative,image,video,primaryText,headline,description,url} = req.body;
 
-    // //     // console.log(AdsetName);
+    //     // console.log(AdsetName);
 
-    //     const save = new newFbSave({email,selection,engagement,CampaignName,
+        const save = new newFbSave({email,selection,engagement,CampaignName,
 
-    //         //adset attributes
+            //adset attributes
     
-    //         AdsetName,date,location,startAge,endAge,gender,demographics,
+            AdsetName,date,location,startAge,endAge,gender,demographics,
     
-    //         // adLevel
+            // adLevel
     
-    //         adCreative,image,video,primaryText,headline,description,url});
+            AdName,adCreative,image,video,primaryText,headline,description,url});
 
-    //     const saved = await save.save();
+        const saved = await save.save();
 
-    //     if(saved){
-    //         return res.status(201).json({message: "user registered successfully!!"});
-    //     }else{
-    //         return res.status(500).json({error: "----------user registeration FAILED---------------"});
-    //     }
+        if(saved){
+            return res.status(201).json({message: "user registered successfully!!"});
+        }else{
+            return res.status(500).json({error: "----------user registeration FAILED---------------"});
+        }
 
 });
 

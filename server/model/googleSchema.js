@@ -36,6 +36,10 @@ const googleSchema = new mongoose.Schema({
     },
     adsetLocation : {
         type : String,
+    },
+    time : {
+        type: Date,
+        default: Date.now
     }
     
 })

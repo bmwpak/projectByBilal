@@ -45,6 +45,9 @@ const newCampFbSchema = new mongoose.Schema({
 
     // adLevel
 
+    AdName : {
+        type : String,
+    },
     adCreative : {
         type : String,
     },
@@ -65,6 +68,10 @@ const newCampFbSchema = new mongoose.Schema({
     },
     url : {
         type : String,
+    },
+    time : {
+        type: Date,
+        default: Date.now
     }
     
 })

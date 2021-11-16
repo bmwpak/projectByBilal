@@ -33,6 +33,7 @@ export default function CampaignForm() {
 
     const initialValues = {
 
+        email : '',
         selection: '',
         engagement: '',
         CampaignName: '',
@@ -160,6 +161,7 @@ export default function CampaignForm() {
     
     const submittingValues = {
 
+        email :  userData.email,
         selection: optionValue,
         engagement: otherValue,
         CampaignName: campaignNam,
@@ -191,7 +193,7 @@ export default function CampaignForm() {
 
         console.log(submittingValues);
 
-		const { selection,engagement,CampaignName,
+		const { email,selection,engagement,CampaignName,
 
         //adset attributes
 
@@ -210,44 +212,44 @@ export default function CampaignForm() {
         // form.append('first',JSON.stringify(submittingValues));
 
         // console.log(image);
-        for(var i = 0 ; i < 3 ; i++){
+        // for(var i = 0 ; i < 3 ; i++){
 
-            if(i == 1){
-                console.log('1');
-                const res = await fetch("/saveNewCampFb" , {
-                    method : "POST" ,
-                    headers : {
+            // if(i == 1){
+            //     console.log('1');
+            //     const res = await fetch("/saveNewCampFb" , {
+            //         method : "POST" ,
+            //         headers : {
                         
-                        "Content-type" : "application/json"
-                    },
-                    body : JSON.stringify({
-                        selection,engagement,CampaignName,
+            //             "Content-type" : "application/json"
+            //         },
+            //         body : JSON.stringify({
+            //             selection,engagement,CampaignName,
 
-                //adset attributes
+            //     //adset attributes
 
-                AdsetName,date,location,startAge,endAge,gender,demographics,
+            //     AdsetName,date,location,startAge,endAge,gender,demographics,
 
-                // adLevel
+            //     // adLevel
 
-                AdName,adCreative,image,primaryText,headline,description,url
+            //     AdName,adCreative,image,primaryText,headline,description,url
 
                 
-                    })
-                });
+            //         })
+            //     });
 
-                // const data = await res.json();
+            //     // const data = await res.json();
 
-                // if(res.status === 422 || !data){
-                //     window.alert("Invalid Registration Data!");
-                //     console.log("Invalid Registration Data!");
-                // }else{
-                //     window.alert("Registration Successfull!");
-                //     console.log("Registration Successfull!");			
-                // }
-            }else if( i == 0 ){         
-                console.log('2');
+            //     // if(res.status === 422 || !data){
+            //     //     window.alert("Invalid Registration Data!");
+            //     //     console.log("Invalid Registration Data!");
+            //     // }else{
+            //     //     window.alert("Registration Successfull!");
+            //     //     console.log("Registration Successfull!");			
+            //     // }
+            // }else if( i == 0 ){         
+                // console.log('2');
                 const form = new FormData();
-                form.append("email",userData.email);
+                form.append("email",email);
 
                 // campign
 
@@ -304,42 +306,42 @@ export default function CampaignForm() {
                     console.log("Invalid Registration Data!");
                 }else{
 
-                    const res = await fetch("/saveNewCampFb" , {
-                        method : "POST" ,
-                        headers : {
+                    // const res = await fetch("/saveNewCampFb" , {
+                    //     method : "POST" ,
+                    //     headers : {
                             
-                            "Content-type" : "application/json"
-                        },
-                        body : JSON.stringify({
-                            selection,engagement,CampaignName,
+                    //         "Content-type" : "application/json"
+                    //     },
+                    //     body : JSON.stringify({
+                    //         email,selection,engagement,CampaignName,
     
-                    //adset attributes
+                    // //adset attributes
     
-                    AdsetName,date,location,startAge,endAge,gender,demographics,
+                    // AdsetName,date,location,startAge,endAge,gender,demographics,
     
-                    // adLevel
+                    // // adLevel
     
-                    AdName,adCreative,image,primaryText,headline,description,url
+                    // AdName,adCreative,image,video,primaryText,headline,description,url
     
                     
-                        })
-                    });
+                    //     })
+                    // });
 
                     window.alert("Registration Successfull!");
                     console.log("Registration Successfull!");
-                }
-            }
+                // }
+            
         }
 
 	};
 
     // props.setCreateNew(submittingValues);
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     getData();
+        getData();
   
-    // } , []);
+    } , []);
 
     useEffect(() => {
 

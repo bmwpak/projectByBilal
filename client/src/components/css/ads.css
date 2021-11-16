@@ -1,0 +1,9 @@
+table {
+    border: 1px solid black;
+    margin-left: 30px;
+  }
+
+th:nth-child(even),td:nth-child(even) {
+    background-color: #D6EEEE;
+  }
+ 
