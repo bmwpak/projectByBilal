@@ -103,7 +103,7 @@ const Ads = () => {
             <span style={{fontWeight:'bold',marginLeft:'4%',fontSize:'20px'}}>Google Ads</span><br/>
             <hr/>
             <div>
-            <table>
+            <table className="ad">
             
                 <tr>
                     <th style={{width:'40px'}}>No.</th>
@@ -129,7 +129,7 @@ const Ads = () => {
             <span style={{fontWeight:'bold',marginLeft:'4%',fontSize:'20px'}}>Facebook Ads</span><br/>
             <hr/>
             <div>
-            <table>
+            <table className="ad">
             
                 <tr>
                     <th style={{width:'40px'}}>No.</th>

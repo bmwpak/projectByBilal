@@ -1,9 +1,9 @@
-table {
-    border: 1px solid black;
+.ad {
+    border: 1px solid rgb(164, 146, 228);
     margin-left: 30px;
   }
 
-th:nth-child(even),td:nth-child(even) {
+.ad th:nth-child(even),.ad td:nth-child(even) {
     background-color: #D6EEEE;
   }
  

@@ -50,7 +50,7 @@ const About = () => {
     <>
     <div className="container-box">
         <form method="GET">
-          <table>
+          <table className="about">
             
           <tr>
               <td className="head" colSpan="2"><b>User Info</b></td>
