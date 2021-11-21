@@ -382,9 +382,9 @@ router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
     // console.log(req.body);
 
     
-    for(let i = 0; i <= req.body.demographics.length; i++) {
-        console.log(req.body.demographics[i]);
-      }
+    // for(let i = 0; i <= req.body.demographics.length; i++) {
+    //     console.log(req.body.demographics[i]);
+    //   }
     
     // var Location = path.parse(req.body.image.replace(/^data:image\/(png|gif|jpeg);base64,/,''));
 
@@ -453,7 +453,7 @@ router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
 
         // adLevel
 
-        AdName,adCreative,image,video,primaryText,headline,description,url} = req.body;
+        AdName,adCreative,image,primaryText,headline,description,url} = req.body;
 
     //     // console.log(AdsetName);
 
@@ -465,7 +465,7 @@ router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
     
             // adLevel
     
-            AdName,adCreative,image,video,primaryText,headline,description,url});
+            AdName,adCreative,image,primaryText,headline,description,url});
 
         const saved = await save.save();
 
