@@ -3,6 +3,7 @@ import './fb.css';
 import Selection from './Selection';
 import Main from './google/Main';
 import { useLocation , useHistory } from "react-router-dom";
+import form from './campaign/newCampaign/Forms.tsx';
 
 const Fb = () => {
   const location = useLocation();
@@ -11,6 +12,16 @@ const Fb = () => {
   const history = useHistory();
 
     const [userData , setUserData] = useState({});
+
+    // Facebook Ad price
+    const [fbPay , setFbPay] = useState(0);
+
+    const pay = () => {
+
+      alert(form.body);
+
+    };
+
 
   const getData = async () => {
 
@@ -86,15 +97,20 @@ const Fb = () => {
   return(
     <>
     <div class="container">
-  <h2>Basic List Group</h2>
+  <h2>Forms for Ads</h2>
   <div class="list-group">
     {(choosenList[0]  == 'Facebook'||choosenList[1] == 'Facebook')?<>
-    <div class="list-group-item" onClick={pressed}>Facebook</div>
+    <div class="list-group-item" onClick={pressed}>Facebook
+    <span style={{marginLeft:"61%"}} >Rs. <b>{fbPay}</b> (Per Day)</span>
+    </div>
     <div>      
       { hide === "none" }
       { hide === "selected" && 
       
-      <Selection  setCreateNew={setCreateNew} />
+      <Selection 
+      fbPay={fbPay}
+      setFbPay={setFbPay}
+       setCreateNew={setCreateNew} />
      
     }
     </div>
@@ -103,6 +119,11 @@ const Fb = () => {
    <Main />):null}
    
   </div>
+
+  <br/><br/>
+            <div class="col-md-12 text-left">
+                 <button type="submit" class="btn btn-primary" style={{marginLeft:'15px'}} onClick={pay}  >Publish</button>
+            </div>
 </div>
     </>
   )

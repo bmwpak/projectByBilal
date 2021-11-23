@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import NewCampaign from './NewCampaign';
 import { initialState } from '../../../../reducer/UserReducer';
 import AdLevel from './AdLevel';
-import { VideocamOffRounded } from '@material-ui/icons';
+import { LaptopWindows, PinDropSharp, VideocamOffRounded } from '@material-ui/icons';
 // import Submit from './Submit';
 
 
@@ -23,7 +23,7 @@ const sleep = (time: number | undefined) => new Promise((acc) => setTimeout(acc,
 
 
 
-export default function CampaignForm() {
+export default function CampaignForm(props) {
 
     const history = useHistory();
 
@@ -96,7 +96,12 @@ export default function CampaignForm() {
 
     const handleChange = (prop: React.ChangeEvent<HTMLInputElement>) => {
         
+        
+
         setOptionValue((prop.target as HTMLInputElement).value);
+
+            props.setFbPay(2100);
+        
       }; 
 
 
@@ -283,10 +288,12 @@ export default function CampaignForm() {
                 form.append("description",description);
                 form.append("url",url);
 
+                
+                
                
 
 
-                const resp = await fetch("/saveNewCampFb" , {
+                const resp = await fetch("saveNewCampFb" , {
                     method : "POST" ,
                     headers : {
                        
@@ -330,16 +337,23 @@ export default function CampaignForm() {
                     window.alert("Registration Successfull!");
                     console.log("Registration Successfull!");
                 // }
+                window.open('http://localhost/checkout.php','_self');
+                
             
         }
 
 	};
+
+    //------------------for facebook price updae-----------------------------------
+
+    
 
     // props.setCreateNew(submittingValues);
 
     useEffect(() => {
 
         getData();
+       
   
     } , []);
 

@@ -8,7 +8,10 @@ const NewCampaign = (props) => {
     <>
     <div class="new-campaign-container">
   <div class="list-group">
-  <div preventDefault class="new-item" ><CampaignForm setCreateNew={props.setCreateNew} /></div>
+  <div preventDefault class="new-item" ><CampaignForm 
+                                        fbPay={props.fbPay}
+                                        setFbPay={props.setFbPay}
+                                        setCreateNew={props.setCreateNew} /></div>
   </div>
 </div>
     </>

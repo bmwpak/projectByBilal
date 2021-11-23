@@ -7,13 +7,17 @@ import { UserContext } from "../App";
 
 const Navbar = () => {
 
+ 
   const {state , dispatch} = useContext(UserContext);
+
+ 
 
 //   useEffect(() => {
 //     const data = String(window.localStorage.getItem('json'));
 //     const formData = JSON.parse(data);
 
 //     dispatch(formData.state);
+//     // GetContext();
 
 //   },[]);
 

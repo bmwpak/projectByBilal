@@ -375,6 +375,7 @@ router.post('/saveGoogleCamp' ,async (req , res) => {
 router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
    
 
+    
     // const Location =  req.file.path;
 
     // console.log(Location);

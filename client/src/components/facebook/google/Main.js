@@ -6,6 +6,10 @@ const Fb = () => {
 
   const [createNew , setCreateNew] = useState();
 
+  
+     // Google Ad price
+     const [gPay , setgPay] = useState(0);
+
   // to change page
   const [ hide , showHide ] = useState("none");
 
@@ -28,10 +32,14 @@ const Fb = () => {
     <>
     
   
-    <div class="list-group-item" onClick={pressed}>Google</div>
+    <div class="list-group-item" onClick={pressed}>Google
+    <span style={{marginLeft:"65%"}} >Rs. <b>{gPay}</b> (Per Day)</span>
+    </div>
     <div>      
       { hide === "none" }
-      { hide === "selected" && <GoogleSelect /> }
+      { hide === "selected" && <GoogleSelect
+                                gPay={gPay}
+                                setgPay={setgPay} /> }
     
           
     

@@ -26,7 +26,7 @@ const sleep = (time: number | undefined) => new Promise((acc) => setTimeout(acc,
 
 
 
-export default function CampaignForm() {
+export default function CampaignForm(props) {
 
     const history = useHistory();
 
@@ -79,6 +79,9 @@ export default function CampaignForm() {
     const handleChange = (prop: React.ChangeEvent<HTMLInputElement>) => {
         
         setBusiness((prop.target as HTMLInputElement).value);
+
+        props.setgPay(300);
+
       }; 
 
 

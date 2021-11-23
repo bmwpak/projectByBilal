@@ -16,7 +16,10 @@ const GoogleSelect = (props) => {
   <div class="list-group">
   <div class="list-group-item" onClick={() => setActive("new")}>New Campaign</div>
   {/*   */}
-  { active ==="new" && <NewCampaign preventDefault setCreateNew={props.setCreateNew} />}
+  { active ==="new" && <NewCampaign preventDefault 
+                        gPay={props.gPay}
+                        setgPay={props.setgPay}
+                        setCreateNew={props.setCreateNew} />}
   {/* { active === "old" && <OldCampaign preventDefault />} */}
   </div>
 </div>

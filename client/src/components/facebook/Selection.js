@@ -17,7 +17,10 @@ const Selection = (props) => {
   <div class="list-group">
   <div class="list-group-item" onClick={() => setActive("new")}>New Campaign</div>
   {/*   */}
-  { active ==="new" && <NewCampaign preventDefault setCreateNew={props.setCreateNew} />}
+  { active ==="new" && <NewCampaign preventDefault 
+                        fbPay={props.fbPay}
+                        setFbPay={props.setFbPay}
+                        setCreateNew={props.setCreateNew} />}
   { active === "old" && <OldCampaign preventDefault />}
   </div>
 </div>
