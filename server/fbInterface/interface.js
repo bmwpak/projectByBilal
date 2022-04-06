@@ -139,7 +139,7 @@ const executablePath = await new Promise(resolve => locateChrome(arg => resolve(
 
   await page.waitForTimeout(1000);
   
-  const cont = await page.waitForXPath('//*[@id="facebook"]/body/div[6]/div[2]/div/div/div/div/div[1]/div/div[3]/span[2]/div/div[2]/button/div/div');
+  const cont = await page.waitForXPath('//*[@id="facebook"]/body/div[6]/div[1]/div[1]/div/div/div/div/div[3]/span[2]/div/div[2]/button/div/div');
   await cont.click();
 
   await page.waitForTimeout(8000);

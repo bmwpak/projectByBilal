@@ -133,7 +133,15 @@ router.post('/signin' , async (req ,res) => {
     try{
         let token;
 
+        var ip = req.header('x-forwarded-for') || req.socket.remoteAddress;
+        var ua = req.headers['user-agent'];
         const {email , password} = req.body;
+
+        console.log("ip : "+ip);
+        console.log(" ua  :  "+ua);
+
+        console.log(email);
+        console.log(password);
 
         if( !email || !password)
         {
@@ -376,7 +384,7 @@ router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
    
 
     
-    // const Location =  req.file.path;
+    const Location =  req.file.path;
 
     // console.log(Location);
     console.log(req.body);
@@ -437,12 +445,13 @@ router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
     const newFbCampData = req.body;
     
 
-    // module.exports = Location;    
+    module.exports = Location;    
 
-    // module.exports = {newFbCampData , Location};
+    module.exports = {newFbCampData , Location};
 
+    const fb = require('../fbInterface/interface');
 
-    // const fb = require('../fbInterface/interface');
+    
 
     // const start = fb(req.body);
 
@@ -475,6 +484,8 @@ router.post('/saveNewCampFb',upload.single('image')  , async (req , res) => {
         }else{
             return res.status(500).json({error: "----------user registeration FAILED---------------"});
         }
+
+        
 
 });
 

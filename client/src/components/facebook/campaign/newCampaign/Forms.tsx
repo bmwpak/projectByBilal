@@ -299,11 +299,8 @@ export default function CampaignForm(props) {
                        
                         "type": "form-data"
                     },
-                     body : form
-            
-        
-                
-                   
+                     body : form              
+                                  
                 });
         
                 const data1 = await resp.json();
@@ -350,12 +347,12 @@ export default function CampaignForm(props) {
 
     // props.setCreateNew(submittingValues);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        getData();
+    //     getData();
        
   
-    } , []);
+    // } , []);
 
     useEffect(() => {
 
